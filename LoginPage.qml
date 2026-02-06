@@ -63,6 +63,9 @@ Item {
                 Layout.fillWidth: true
                 maximumLength: 32
                 Material.accent: "#008080"
+                validator: RegularExpressionValidator {
+                    regularExpression: /^\w{2,32}$/
+                }
             }
 
             TextField {
@@ -70,7 +73,11 @@ Item {
                 placeholderText: "Password"
                 echoMode: TextField.Password
                 Layout.fillWidth: true
+                maximumLength: 32
                 Material.accent: "#008080"
+                validator: RegularExpressionValidator {
+                    regularExpression: /^.{2,32}$/
+                }
             }
 
             ComboBox {
@@ -85,7 +92,8 @@ Item {
                 text: "Sign In"
                 Layout.fillWidth: true
                 Layout.topMargin: 10
-                enabled: usernameInput.text.length > 0
+                enabled: usernameInput.acceptableInput
+                         && passwordInput.acceptableInput
                          && roleInput.currentIndex !== 0
                 onClicked: console.log("Logging in...")
             }
