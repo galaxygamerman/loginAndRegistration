@@ -81,8 +81,12 @@ Item {
 			TextField {
 				id: userField
 				placeholderText: "Username"
-				maximumLength: 20
+				maximumLength: 32
 				Layout.fillWidth: true
+				Material.accent: "#008080"
+				validator: RegularExpressionValidator {
+					regularExpression: /^\w{2,32}$/
+				}
 			}
 
 			Label {
@@ -94,6 +98,10 @@ Item {
 				placeholderText: "Min 6 characters"
 				echoMode: TextField.Password
 				Layout.fillWidth: true
+				Material.accent: "#008080"
+				validator: RegularExpressionValidator {
+					regularExpression: /^.{6,32}$/
+				}
 			}
 
 			Label {
@@ -109,6 +117,7 @@ Item {
 				}
 				inputMethodHints: Qt.ImhDigitsOnly
 				Layout.fillWidth: true
+				Material.accent: "#008080"
 			}
 
 			Label {
@@ -124,16 +133,19 @@ Item {
 					id: maleRadio
 					text: "Male"
 					ButtonGroup.group: genderGroup
+					Material.accent: "#008080"
 				}
 				RadioButton {
 					id: femaleRadio
 					text: "Female"
 					ButtonGroup.group: genderGroup
+					Material.accent: "#008080"
 				}
 				RadioButton {
 					id: otherRadio
 					text: "Other"
 					ButtonGroup.group: genderGroup
+					Material.accent: "#008080"
 				}
 			}
 
@@ -152,15 +164,15 @@ Item {
 					}
 					ListElement {
 						value: 1
-						text: "Developer"
+						text: "Admin"
 					}
 					ListElement {
 						value: 2
-						text: "Designer"
+						text: "Staff"
 					}
 					ListElement {
 						value: 3
-						text: "Manager"
+						text: "Guest"
 					}
 				}
 				property int selectedValue: model.get(currentIndex).value
@@ -171,7 +183,7 @@ Item {
 				text: "Register"
 				Layout.fillWidth: true
 				Layout.topMargin: 15
-				enabled: userField.text.length > 0 && pwdField.text.length >= 6
+				enabled: userField.acceptableInput && pwdField.acceptableInput
 						 && ageField.acceptableInput
 						 && genderGroup.checkedButton !== null
 						 && roleBox.selectedValue > 0
