@@ -82,7 +82,7 @@ Item {
 
             ComboBox {
                 id: roleInput
-                model: ["Role", "Admin", "Staff", "Guest"]
+                model: ["Select a Role...", "Admin", "Staff", "Guest"]
                 Layout.fillWidth: true
                 Material.accent: "#008080"
             }
