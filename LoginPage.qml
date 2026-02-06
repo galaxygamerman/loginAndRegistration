@@ -5,8 +5,10 @@ import QtQuick.Controls.Material
 
 Item {
     id: loginPage
+    implicitWidth: 640
+    implicitHeight: 480
+
     signal goToRegister
-    anchors.fill: parent
 
     // Background Image
     Image {

@@ -5,7 +5,9 @@ import QtQuick.Controls.Material
 
 Item {
 	id: registrationPage
-	anchors.fill: parent
+	implicitWidth: 640
+	implicitHeight: 480
+
 	signal goBack
 
 	Image {
