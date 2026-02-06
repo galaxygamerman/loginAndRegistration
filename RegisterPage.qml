@@ -6,18 +6,14 @@ import QtQuick.Controls.Material
 Item {
 	id: registrationPage
 	anchors.fill: parent
+	signal goBack
 
-	// Signal to notify the StackView to navigate back
-	signal goBack()
-
-	// 1. Background Image
 	Image {
 		id: backgroundImage
 		source: "qrc:/assets/TheCrack.jpg"
 		anchors.fill: parent
 		fillMode: Image.PreserveAspectCrop
 
-		// Optional darken overlay
 		Rectangle {
 			anchors.fill: parent
 			color: "black"
@@ -25,7 +21,6 @@ Item {
 		}
 	}
 
-	// 2. Fixed Back Button (Top-Left)
 	Text {
 		id: backBtn
 		text: "< Back"
@@ -44,30 +39,29 @@ Item {
 		}
 	}
 
-	// // 3. Scrollable Content
-	// ScrollView {
-		// anchors.fill: parent
-		// contentWidth: parent.width
-		// clip: true
+	// FORM WRAPPER: Ensures Layout doesn't overflow
+	Item {
+		id: registerContainer
+		width: parent.width * 0.60
+		// Use implicitHeight to ensure the background covers all fields
+		height: mainLayout.implicitHeight
+		anchors.centerIn: parent
+
+		Rectangle {
+			id: cardBackground
+			anchors.fill: parent
+			anchors.margins: -30
+			color: "#D9FFFFFF"
+			radius: 15
+			z: -1
+			border.color: "#33000000"
+			border.width: 1
+		}
 
 		ColumnLayout {
 			id: mainLayout
-			width: parent.width * 0.60
-			anchors.centerIn: parent
-			anchors.horizontalCenter: parent.horizontalCenter
-			spacing: 12
-
-			// --- Translucent Card Background ---
-			Rectangle {
-				id: cardBackground
-				anchors.fill: parent
-				// anchors.margins: -25
-				color: "#D9FFFFFF" // Approx 85% white
-				radius: 15
-				z: -1 // Stay behind inputs
-				border.color: "#33000000"
-				border.width: 1
-			}
+			anchors.fill: parent
+			spacing: 8 // Tighter spacing for more fields
 
 			Text {
 				text: "Create Account"
@@ -75,21 +69,24 @@ Item {
 				font.bold: true
 				color: "#2c3e50"
 				Layout.alignment: Qt.AlignHCenter
-				Layout.topMargin: 60 // Space for the Back button
 				Layout.bottomMargin: 10
 			}
 
-			// --- Username ---
-			Label { text: "Username"; font.bold: true; Layout.topMargin: 5 }
+			Label {
+				text: "Username"
+				font.bold: true
+			}
 			TextField {
 				id: userField
-				placeholderText: "Pick a unique username"
+				placeholderText: "Username"
 				maximumLength: 20
 				Layout.fillWidth: true
 			}
 
-			// --- Password ---
-			Label { text: "Password"; font.bold: true }
+			Label {
+				text: "Password"
+				font.bold: true
+			}
 			TextField {
 				id: pwdField
 				placeholderText: "Min 6 characters"
@@ -97,69 +94,88 @@ Item {
 				Layout.fillWidth: true
 			}
 
-			// --- Age ---
-			Label { text: "Age"; font.bold: true }
+			Label {
+				text: "Age"
+				font.bold: true
+			}
 			TextField {
 				id: ageField
 				placeholderText: "18 - 99"
-				validator: IntValidator { bottom: 18; top: 99 }
+				validator: IntValidator {
+					bottom: 18
+					top: 99
+				}
 				inputMethodHints: Qt.ImhDigitsOnly
 				Layout.fillWidth: true
 			}
 
-			// --- Gender ---
-			Label { text: "Gender"; font.bold: true; Layout.topMargin: 5 }
+			Label {
+				text: "Gender"
+				font.bold: true
+			}
 			RowLayout {
-				spacing: 15
-				ButtonGroup { id: genderGroup }
+				Layout.alignment: Qt.AlignLeft
+				ButtonGroup {
+					id: genderGroup
+				}
 				RadioButton {
-					id: maleRadio; text: "Male"
+					id: maleRadio
+					text: "Male"
 					ButtonGroup.group: genderGroup
 				}
 				RadioButton {
-					id: femaleRadio; text: "Female"
+					id: femaleRadio
+					text: "Female"
 					ButtonGroup.group: genderGroup
 				}
 				RadioButton {
-					id: otherRadio; text: "Other"
+					id: otherRadio
+					text: "Other"
 					ButtonGroup.group: genderGroup
 				}
 			}
 
-			// --- Role ---
-			Label { text: "Account Role"; font.bold: true; Layout.topMargin: 5 }
+			Label {
+				text: "Account Role"
+				font.bold: true
+			}
 			ComboBox {
 				id: roleBox
 				textRole: "text"
 				Layout.fillWidth: true
 				model: ListModel {
-					ListElement { value: 0; text: "Select a Role..." }
-					ListElement { value: 1; text: "Developer" }
-					ListElement { value: 2; text: "Designer" }
-					ListElement { value: 3; text: "Manager" }
+					ListElement {
+						value: 0
+						text: "Select a Role..."
+					}
+					ListElement {
+						value: 1
+						text: "Developer"
+					}
+					ListElement {
+						value: 2
+						text: "Designer"
+					}
+					ListElement {
+						value: 3
+						text: "Manager"
+					}
 				}
 				property int selectedValue: model.get(currentIndex).value
 			}
 
-			// --- Submit Button ---
 			Button {
 				id: registerBtn
 				text: "Register"
 				Layout.fillWidth: true
-				Layout.topMargin: 20
-				Layout.bottomMargin: 40 // Space at the bottom of the scroll
-
-				enabled: userField.text.length > 0
-						 && pwdField.text.length >= 6
+				Layout.topMargin: 15
+				enabled: userField.text.length > 0 && pwdField.text.length >= 6
 						 && ageField.acceptableInput
 						 && genderGroup.checkedButton !== null
 						 && roleBox.selectedValue > 0
 
-				onClicked: {
-					console.log("Registered:", userField.text)
-					// Add your transition or logic here
-				}
+				onClicked: console.log("Registered:", userField.text)
 			}
 		}
-	// }
+	}
 }
