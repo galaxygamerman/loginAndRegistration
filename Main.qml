@@ -3,7 +3,7 @@ import QtQuick.Controls
 
 Window {
 	width: 640
-	height: 480
+	height: 1080
 	visible: true
 	title: qsTr("Task 1")
 
