@@ -80,6 +80,7 @@ Item {
 				Layout.fillWidth: true
 				Layout.fillHeight: true
 				clip: true
+				interactive: false
 
 				// PAGE 1: Credentials
 				ColumnLayout {
@@ -287,12 +288,46 @@ Item {
 			}
 
 			Button {
+				id: nextBtn
+				text: "Next >"
+				Layout.fillWidth: true
+				Layout.topMargin: 15
+				Material.accent: "#008080"
+				visible: {
+					if (view.currentIndex === 0)
+						return userField.acceptableInput
+								&& pwdField.acceptableInput
+								&& (pwdField.text === confirmPwdField.text)
+					else if (view.currentIndex === 1)
+						return nameField.acceptableInput
+								&& emailField.acceptableInput
+								&& phoneField.acceptableInput
+					else if (view.currentIndex === 2)
+						return false
+				}
+				enabled: {
+					if (view.currentIndex === 0)
+						return userField.acceptableInput
+								&& pwdField.acceptableInput
+								&& (pwdField.text === confirmPwdField.text)
+					else if (view.currentIndex === 1)
+						return nameField.acceptableInput
+								&& emailField.acceptableInput
+								&& phoneField.acceptableInput
+					else if (view.currentIndex === 2)
+						return false
+				}
+
+				onClicked: view.currentIndex += 1
+			}
+			Button {
 				id: registerBtn
 				text: "Register"
 				Layout.fillWidth: true
 				Layout.topMargin: 15
 				Material.accent: "#008080"
-				enabled: userField.acceptableInput && pwdField.acceptableInput
+				visible: userField.acceptableInput
+						 && pwdField.acceptableInput
 						 && (pwdField.text === confirmPwdField.text)
 						 && nameField.acceptableInput
 						 && emailField.acceptableInput
@@ -300,6 +335,17 @@ Item {
 						 && ageField.contentItem.acceptableInput
 						 && genderGroup.checkedButton !== null
 						 && roleBox.selectedValue > 0
+						 && view.currentIndex === view.count - 1
+				enabled: userField.acceptableInput
+						 && pwdField.acceptableInput
+						 && (pwdField.text === confirmPwdField.text)
+						 && nameField.acceptableInput
+						 && emailField.acceptableInput
+						 && phoneField.acceptableInput
+						 && ageField.contentItem.acceptableInput
+						 && genderGroup.checkedButton !== null
+						 && roleBox.selectedValue > 0
+						 && view.currentIndex === view.count - 1
 
 				onClicked: console.log(
 							   `Registered: ${userField.text}`
