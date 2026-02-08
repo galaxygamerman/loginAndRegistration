@@ -1,7 +1,7 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Controls.Material
+import com.company.database 1.0
 
 Item {
 	id: registrationPage
@@ -10,6 +10,10 @@ Item {
 
 	signal goBack
 	signal registrationCompleted
+
+	DatabaseManager {
+		id: dbManager
+	}
 
 	Image {
 		id: backgroundImage
@@ -329,15 +333,26 @@ Item {
 						 && roleBox.selectedValue > 0
 
 				onClicked: {
-					console.log(
-								`Registered: ${userField.text}`
+					console.log(`Registering: ${userField.text}`
 								+ ` password: ${pwdField.text}`
-								+ ` age: ${ageField.value}`
 								+ ` name: ${nameField.text}`
 								+ ` email: ${emailField.text}`
 								+ ` phone: ${phoneField.text}`
+								+ ` age: ${ageField.value}`
 								+ ` gender: ${genderGroup.checkedButton.text}`
 								+ ` role: ${roleBox.currentText}`)
+					let success = dbManager.registerUser(userField.text,
+														 pwdField.text,
+														 nameField.text,
+														 emailField.text,
+														 phoneField.text,
+														 ageField.value,
+														 genderGroup.checkedButton.text,
+														 roleBox.currentText)
+					if(!success) {
+						console.error("Registration was not made.")
+						return
+					}
 					registrationPage.registrationCompleted()
 				}
 			}

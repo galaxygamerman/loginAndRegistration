@@ -1,9 +1,12 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include "databasemanager.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+
+    qmlRegisterType<DatabaseManager>("com.company.database", 1, 0, "DatabaseManager");
 
     QQmlApplicationEngine engine;
     QObject::connect(
