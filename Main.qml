@@ -1,11 +1,18 @@
 import QtQuick
-import QtQuick.Controls
+import QtQuick.Controls.Material
 
 Window {
 	width: 640
 	height: 1080
 	visible: true
 	title: qsTr("Task 1")
+
+	RegistrationSuccessDialog {
+		id: successDialog
+		anchors.centerIn: parent
+		title: "Success"
+		text: "Account creation was successful!\nYou can now log in."
+	}
 
 	StackView {
 		id: stack
@@ -23,6 +30,10 @@ Window {
 		id: registerPage
 		RegisterPage {
 			onGoBack: stack.pop()
+			onRegistrationCompleted: {
+				stack.pop()
+				successDialog.open()
+			}
 		}
 	}
 }

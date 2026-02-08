@@ -20,6 +20,7 @@ qt_add_qml_module(apploginAndRegistration
         QML_FILES LoginPage.qml
         QML_FILES RegisterPage.qml
         RESOURCES assets.qrc
+        QML_FILES RegistrationSuccessDialog.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

@@ -9,6 +9,7 @@ Item {
 	implicitHeight: 480
 
 	signal goBack
+	signal registrationCompleted
 
 	Image {
 		id: backgroundImage
@@ -327,15 +328,18 @@ Item {
 						 && genderGroup.checkedButton !== null
 						 && roleBox.selectedValue > 0
 
-				onClicked: console.log(
-							   `Registered: ${userField.text}`
-							   + ` password: ${pwdField.text}`
-							   + ` age: ${ageField.value}`
-							   + ` name: ${nameField.text}`
-							   + ` email: ${emailField.text}`
-							   + ` phone: ${phoneField.text}`
-							   + ` gender: ${genderGroup.checkedButton.text}`
-							   + ` role: ${roleBox.currentText}`)
+				onClicked: {
+					console.log(
+								`Registered: ${userField.text}`
+								+ ` password: ${pwdField.text}`
+								+ ` age: ${ageField.value}`
+								+ ` name: ${nameField.text}`
+								+ ` email: ${emailField.text}`
+								+ ` phone: ${phoneField.text}`
+								+ ` gender: ${genderGroup.checkedButton.text}`
+								+ ` role: ${roleBox.currentText}`)
+					registrationPage.registrationCompleted()
+				}
 			}
 		}
 	}
