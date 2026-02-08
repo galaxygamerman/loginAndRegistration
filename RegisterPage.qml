@@ -293,18 +293,7 @@ Item {
 				Layout.fillWidth: true
 				Layout.topMargin: 15
 				Material.accent: "#008080"
-				visible: {
-					if (view.currentIndex === 0)
-						return userField.acceptableInput
-								&& pwdField.acceptableInput
-								&& (pwdField.text === confirmPwdField.text)
-					else if (view.currentIndex === 1)
-						return nameField.acceptableInput
-								&& emailField.acceptableInput
-								&& phoneField.acceptableInput
-					else if (view.currentIndex === 2)
-						return false
-				}
+				visible: view.currentIndex < view.count - 1
 				enabled: {
 					if (view.currentIndex === 0)
 						return userField.acceptableInput
@@ -314,7 +303,7 @@ Item {
 						return nameField.acceptableInput
 								&& emailField.acceptableInput
 								&& phoneField.acceptableInput
-					else if (view.currentIndex === 2)
+					else if (view.currentIndex <= view.count - 1)
 						return false
 				}
 
@@ -326,7 +315,9 @@ Item {
 				Layout.fillWidth: true
 				Layout.topMargin: 15
 				Material.accent: "#008080"
-				visible: userField.acceptableInput
+				visible: view.currentIndex === view.count - 1
+				enabled: view.currentIndex === view.count - 1
+						 && userField.acceptableInput
 						 && pwdField.acceptableInput
 						 && (pwdField.text === confirmPwdField.text)
 						 && nameField.acceptableInput
@@ -335,17 +326,6 @@ Item {
 						 && ageField.contentItem.acceptableInput
 						 && genderGroup.checkedButton !== null
 						 && roleBox.selectedValue > 0
-						 && view.currentIndex === view.count - 1
-				enabled: userField.acceptableInput
-						 && pwdField.acceptableInput
-						 && (pwdField.text === confirmPwdField.text)
-						 && nameField.acceptableInput
-						 && emailField.acceptableInput
-						 && phoneField.acceptableInput
-						 && ageField.contentItem.acceptableInput
-						 && genderGroup.checkedButton !== null
-						 && roleBox.selectedValue > 0
-						 && view.currentIndex === view.count - 1
 
 				onClicked: console.log(
 							   `Registered: ${userField.text}`
