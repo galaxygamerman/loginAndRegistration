@@ -2,12 +2,17 @@
 #include <QDebug>
 #include <QObject>
 #include <QtSql>
+#include <QtQml/qqmlregistration.h>
 
 DatabaseManager::DatabaseManager(QObject *parent)
 	: QObject(parent)
 {
-	myDB = QSqlDatabase::addDatabase("QSQLITE");
-	myDB.setDatabaseName("users.db");
+	if (QSqlDatabase::contains("qt_sql_default_connection")) {
+		myDB = QSqlDatabase::database("qt_sql_default_connection");
+	} else {
+		myDB = QSqlDatabase::addDatabase("QSQLITE");
+		myDB.setDatabaseName("users.db");
+	}
 
 	if (!myDB.open()) {
 		qDebug() << "Error: connection with database failed";

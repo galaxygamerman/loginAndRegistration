@@ -6,7 +6,8 @@ int main(int argc, char *argv[])
 {
 	QGuiApplication app(argc, argv);
 
-	qmlRegisterType<DatabaseManager>("com.company.database", 1, 0, "DatabaseManager");
+	DatabaseManager* dbManager = new DatabaseManager(&app);
+	qmlRegisterSingletonInstance("loginAndRegistration", 1, 0, "DatabaseManager", dbManager);
 
 	QQmlApplicationEngine engine;
 	QObject::connect(

@@ -1,16 +1,11 @@
 import QtQuick
 import QtQuick.Controls.Material
-import com.company.database
 
 Window {
 	width: 640
 	height: 1080
 	visible: true
 	title: qsTr("Task 1")
-
-	DatabaseManager {
-		id: dbManager
-	}
 
 	AuthStatusDialog {
 		id: authStatusDialog
