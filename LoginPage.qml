@@ -22,16 +22,8 @@ Item {
 		height: loginLayout.implicitHeight // Height follows content
 		anchors.centerIn: parent
 
-		// Translucent Background Card
-		Rectangle {
+		BackgroundCard {
 			id: cardBackground
-			anchors.fill: parent
-			anchors.margins: -30
-			color: "#CCFFFFFF"
-			radius: 12
-			border.color: "#33000000"
-			border.width: 1
-			z: -1
 		}
 
 		ColumnLayout {

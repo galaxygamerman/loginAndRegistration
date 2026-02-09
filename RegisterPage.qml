@@ -29,15 +29,8 @@ Item {
 		height: mainLayout.implicitHeight
 		anchors.centerIn: parent
 
-		Rectangle {
+		BackgroundCard {
 			id: cardBackground
-			anchors.fill: parent
-			anchors.margins: -30
-			color: "#D9FFFFFF"
-			radius: 15
-			z: -1
-			border.color: "#33000000"
-			border.width: 1
 		}
 
 		ColumnLayout {
