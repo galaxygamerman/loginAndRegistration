@@ -168,9 +168,9 @@ Item {
 					}
 					SpinBox {
 						id: ageField
-						from: 18
+						from: 1
 						to: 200
-						value: 18
+						value: ageField.from
 						editable: true
 						Layout.fillWidth: true
 						Material.accent: "#008080"
@@ -184,7 +184,7 @@ Item {
 							verticalAlignment: Qt.AlignVCenter
 							validator: IntValidator {
 								bottom: 18
-								top: 200
+								top: ageField.to
 							}
 						}
 					}
@@ -260,7 +260,7 @@ Item {
 					let count = 0
 					if (userField.acceptableInput) count++
 					if (pwdField.acceptableInput)count++
-					if (pwdField.text === confirmPwdField.text)count++
+					if (pwdField.text !== "" && pwdField.text === confirmPwdField.text)count++
 					if (nameField.acceptableInput) count++
 					if (emailField.acceptableInput) count++
 					if (phoneField.acceptableInput) count++
