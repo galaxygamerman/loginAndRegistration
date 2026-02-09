@@ -14,7 +14,6 @@ DatabaseManager::DatabaseManager(QObject *parent)
 	} else {
 		QSqlQuery query;
 		query.exec("CREATE TABLE IF NOT EXISTS users("
-				   "user_id INTEGER PRIMARY KEY AUTOINCREMENT,"
 				   "username TEXT,"
 				   "password TEXT,"
 				   "fullname TEXT,"
@@ -22,7 +21,9 @@ DatabaseManager::DatabaseManager(QObject *parent)
 				   "phone TEXT,"
 				   "age INTEGER,"
 				   "gender TEXT,"
-				   "userrole TEXT)");
+				   "userrole TEXT,"
+				   "PRIMARY KEY (username)"
+				   ")");
 	}
 }
 
