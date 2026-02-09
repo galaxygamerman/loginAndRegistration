@@ -46,6 +46,8 @@ Window {
 	}
 	Component {
 		id: dashboardPage
-		DashboardPage {}
+		DashboardPage {
+			onLogout: stack.pop()
+		}
 	}
 }
