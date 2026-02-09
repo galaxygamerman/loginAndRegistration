@@ -253,11 +253,29 @@ Item {
 				}
 			}
 
-			PageIndicator {
-				id: indicator
-				count: view.count
-				currentIndex: view.currentIndex
-				Layout.alignment: Qt.AlignHCenter
+			ProgressBar {
+				id: progressBar
+
+				readonly property real currentProgress: {
+					let count = 0
+					if (userField.acceptableInput) count++
+					if (pwdField.acceptableInput)count++
+					if (pwdField.text === confirmPwdField.text)count++
+					if (nameField.acceptableInput) count++
+					if (emailField.acceptableInput) count++
+					if (phoneField.acceptableInput) count++
+					if (ageField.contentItem.acceptableInput) count++
+					if (genderGroup.checkedButton !== null) count++
+					if (roleBox.selectedValue > 0) count++
+					return count / 9.0
+				}
+
+				Layout.fillWidth: true
+				Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+				Material.accent: "#008080"
+				from: 0.0
+				to: 1.0
+				value: currentProgress
 			}
 
 			Button {
