@@ -23,6 +23,7 @@ qt_add_qml_module(apploginAndRegistration
         QML_FILES RegistrationSuccessDialog.qml
         SOURCES databasemanager.h databasemanager.cpp
         QML_FILES DashboardPage.qml
+        QML_FILES BackgroundImage.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

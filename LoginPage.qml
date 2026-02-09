@@ -10,18 +10,9 @@ Item {
 	signal goToRegister
 	signal loginCompleted(var userData)
 
-	// Background Image
-	Image {
+	BackgroundImage {
 		id: backgroundImage
-		source: "qrc:/assets/TheCrack.jpg"
 		anchors.fill: parent
-		fillMode: Image.PreserveAspectCrop
-
-		Rectangle {
-			anchors.fill: parent
-			color: "black"
-			opacity: 0.2
-		}
 	}
 
 	// FORM WRAPPER: Separates background from Layout

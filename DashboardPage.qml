@@ -9,17 +9,9 @@ Item {
 
 	property var userData: ({})
 
-	Image {
+	BackgroundImage {
 		id: backgroundImage
-		source: "qrc:/assets/TheCrack.jpg"
 		anchors.fill: parent
-		fillMode: Image.PreserveAspectCrop
-
-		Rectangle {
-			anchors.fill: parent
-			color: "black"
-			opacity: 0.2
-		}
 	}
 
 	Text {
