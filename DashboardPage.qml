@@ -14,22 +14,10 @@ Item {
 		anchors.fill: parent
 	}
 
-	Text {
+	ReturnButton {
 		id: logoutBtn
 		text: "< Logout"
-		font.pixelSize: 16
-		color: logoutMouseArea.containsMouse ? "white" : "#e0e0e0"
-		z: 10
-		anchors.left: parent.left
-		anchors.top: parent.top
-		anchors.margins: 20
-
-		MouseArea {
-			id: logoutMouseArea
-			anchors.fill: parent
-			hoverEnabled: true
-			onClicked: dashboardPage.logout()
-		}
+		onClicked: dashboardPage.logout()
 	}
 
 	Item {
@@ -49,7 +37,7 @@ Item {
 		}
 
 		GridLayout {
-			id:mainLayout
+			id: mainLayout
 			anchors.fill: parent
 			columns: 2
 

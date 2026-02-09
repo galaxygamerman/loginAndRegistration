@@ -15,22 +15,10 @@ Item {
 		anchors.fill: parent
 	}
 
-	Text {
+	ReturnButton {
 		id: backBtn
 		text: "< Back"
-		font.pixelSize: 16
-		color: backMouseArea.containsMouse ? "white" : "#e0e0e0"
-		z: 10
-		anchors.left: parent.left
-		anchors.top: parent.top
-		anchors.margins: 20
-
-		MouseArea {
-			id: backMouseArea
-			anchors.fill: parent
-			hoverEnabled: true
-			onClicked: registrationPage.goBack()
-		}
+		onClicked: registrationPage.goBack()
 	}
 
 	// FORM WRAPPER: Ensures Layout doesn't overflow

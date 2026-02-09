@@ -24,7 +24,7 @@ Item {
 
 		// Translucent Background Card
 		Rectangle {
-			id: translucentCard
+			id: cardBackground
 			anchors.fill: parent
 			anchors.margins: -30
 			color: "#CCFFFFFF"
