@@ -4,6 +4,8 @@ import QtQuick.Controls.Material
 
 Item {
 	id: dashboardPage
+	implicitWidth: 640
+	implicitHeight: 480
 
 	signal logout
 
