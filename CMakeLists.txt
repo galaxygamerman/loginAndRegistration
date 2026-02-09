@@ -20,7 +20,7 @@ qt_add_qml_module(apploginAndRegistration
         QML_FILES LoginPage.qml
         QML_FILES RegisterPage.qml
         RESOURCES assets.qrc
-        QML_FILES RegistrationSuccessDialog.qml
+        QML_FILES AuthStatusDialog.qml
         SOURCES databasemanager.h databasemanager.cpp
         QML_FILES DashboardPage.qml
         QML_FILES BackgroundImage.qml

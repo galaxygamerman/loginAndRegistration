@@ -9,6 +9,7 @@ Item {
 
 	signal goToRegister
 	signal loginCompleted(var userData)
+	signal loginFailed
 
 	BackgroundImage {
 		id: backgroundImage
@@ -86,6 +87,7 @@ Item {
 					let success = dbManager.checkUser(usernameInput.text, passwordInput.text, roleInput.currentText)
 					if(!success){
 						console.error("Login was not possible")
+						loginPage.loginFailed()
 						return
 					}
 					let userData = dbManager.getUserData(usernameInput.text)

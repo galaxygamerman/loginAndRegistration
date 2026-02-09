@@ -67,7 +67,6 @@ bool DatabaseManager::checkUser(const QString &username,
 
 	if (!query.exec()) {
 		qDebug() << "User login failed: " << query.lastError().text();
-		// TODO: Upon failed login, show the modal with a "Failed to authenticate" message
 		return false;
 	}
 

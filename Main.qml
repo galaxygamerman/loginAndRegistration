@@ -12,11 +12,9 @@ Window {
 		id: dbManager
 	}
 
-	RegistrationSuccessDialog {
-		id: successDialog
+	AuthStatusDialog {
+		id: authStatusDialog
 		anchors.centerIn: parent
-		title: "Success"
-		text: "Account creation was successful!\nYou can now log in."
 	}
 
 	StackView {
@@ -32,6 +30,11 @@ Window {
 			onLoginCompleted: userData => {
 								  stack.push(dashboardPage, { "userData": userData })
 							  }
+			onLoginFailed: {
+				authStatusDialog.title = "Failure"
+				authStatusDialog.text = "Your credentials are wrong.\nPlease try again."
+				authStatusDialog.open()
+			}
 		}
 	}
 	Component {
@@ -40,7 +43,9 @@ Window {
 			onGoBack: stack.pop()
 			onRegistrationCompleted: {
 				stack.pop()
-				successDialog.open()
+				authStatusDialog.title = "Success"
+				authStatusDialog.text = "Account creation was successful!\nYou can now log in."
+				authStatusDialog.open()
 			}
 		}
 	}
