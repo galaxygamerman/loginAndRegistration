@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Material
-import com.company.database 1.0
 
 Item {
 	id: loginPage
@@ -10,10 +9,6 @@ Item {
 
 	signal goToRegister
 	signal loginCompleted
-
-	DatabaseManager{
-		id: dbManager
-	}
 
 	// Background Image
 	Image {
