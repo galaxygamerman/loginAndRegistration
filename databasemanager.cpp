@@ -57,3 +57,21 @@ bool DatabaseManager::registerUser(const QString &username,
 
     return query.exec();
 }
+
+bool DatabaseManager::checkUser(const QString &username, const QString &password, const QString &userrole){
+    qDebug() << "In the backend: " << username
+             << ' ' << password
+             << ' ' << userrole;
+    QSqlQuery query;
+    query.prepare("SELECT username, password FROM users WHERE username = :username AND password = :password");
+    query.bindValue(":username",username);
+    query.bindValue(":password",password);
+
+    if (!query.exec()){
+        qDebug() << "User login failed: " << query.lastError().text();
+        // TODO: Upon failed login, show the modal with a "Failed to authenticate" message
+        return false;
+    }
+
+    return query.next();
+}

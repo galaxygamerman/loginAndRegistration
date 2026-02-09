@@ -23,6 +23,7 @@ public:
                                   const QString &age,
                                   const QString &gender,
                                   const QString &userrole);
+    Q_INVOKABLE bool checkUser(const QString &username, const QString &password, const QString &userrole);
 };
 
 #endif // DATABASEMANAGER_H

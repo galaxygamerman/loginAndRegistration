@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Material
+import com.company.database 1.0
 
 Item {
 	id: loginPage
@@ -8,6 +9,11 @@ Item {
 	implicitHeight: 480
 
 	signal goToRegister
+	signal loginCompleted
+
+	DatabaseManager{
+		id: dbManager
+	}
 
 	// Background Image
 	Image {
@@ -95,10 +101,17 @@ Item {
 				enabled: usernameInput.acceptableInput
 						 && passwordInput.acceptableInput
 						 && roleInput.currentIndex !== 0
-				onClicked: console.log(
-							   "Logging in..." + ` user: ${usernameInput.text}`
-							   + ` password: ${passwordInput.text}`
-							   + ` role: ${roleInput.currentText}`)
+				onClicked: {
+					console.log("Logging in..." + ` user: ${usernameInput.text}`
+								+ ` password: ${passwordInput.text}`
+								+ ` role: ${roleInput.currentText}`)
+					let success = dbManager.checkUser(usernameInput.text, passwordInput.text, roleInput.currentText)
+					if(!success){
+						console.error("Login was not possible")
+						return
+					}
+					loginPage.loginCompleted()
+				}
 			}
 
 			Text {

@@ -24,6 +24,7 @@ Window {
 		id: loginPage
 		LoginPage {
 			onGoToRegister: stack.push(registerPage)
+			onLoginCompleted: stack.push(dashboardPage)
 		}
 	}
 	Component {
@@ -35,5 +36,9 @@ Window {
 				successDialog.open()
 			}
 		}
+	}
+	Component {
+		id: dashboardPage
+		DashboardPage{}
 	}
 }
