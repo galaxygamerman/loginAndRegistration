@@ -73,3 +73,27 @@ bool DatabaseManager::checkUser(const QString &username,
 
 	return query.next();
 }
+
+QVariantHash DatabaseManager::getUserData(const QString &username)
+{
+	qDebug() << "Searching for " << username << "'s data...";
+	QSqlQuery query;
+	query.prepare("SELECT * FROM users WHERE username = :username");
+	query.bindValue(":username", username);
+
+	QVariantHash userData;
+	if (query.exec() && query.next()) {
+		userData["username"] = query.value("username");
+		userData["password"] = query.value("password");
+		userData["fullname"] = query.value("fullname");
+		userData["email"] = query.value("email");
+		userData["phone"] = query.value("phone");
+		userData["age"] = query.value("age");
+		userData["gender"] = query.value("gender");
+		userData["userrole"] = query.value("userrole");
+		userData["success"] = true;
+	} else {
+		userData["success"] = false;
+	}
+	return userData;
+}

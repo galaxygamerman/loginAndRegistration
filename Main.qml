@@ -29,7 +29,9 @@ Window {
 		id: loginPage
 		LoginPage {
 			onGoToRegister: stack.push(registerPage)
-			onLoginCompleted: stack.push(dashboardPage)
+			onLoginCompleted: userData => {
+								  stack.push(dashboardPage, { "userData": userData })
+							  }
 		}
 	}
 	Component {
@@ -44,6 +46,6 @@ Window {
 	}
 	Component {
 		id: dashboardPage
-		DashboardPage{}
+		DashboardPage {}
 	}
 }

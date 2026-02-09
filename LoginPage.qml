@@ -8,7 +8,7 @@ Item {
 	implicitHeight: 480
 
 	signal goToRegister
-	signal loginCompleted
+	signal loginCompleted(var userData)
 
 	// Background Image
 	Image {
@@ -105,7 +105,8 @@ Item {
 						console.error("Login was not possible")
 						return
 					}
-					loginPage.loginCompleted()
+					let userData = dbManager.getUserData(usernameInput.text)
+					loginPage.loginCompleted(userData)
 				}
 			}
 
