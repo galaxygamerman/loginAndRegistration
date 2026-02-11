@@ -44,6 +44,15 @@ target_link_libraries(apploginAndRegistration
     Qt6::Sql
 )
 
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/database")
+add_custom_target(copy_database_files
+    COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different
+        "${CMAKE_CURRENT_SOURCE_DIR}/database/"
+        "${CMAKE_CURRENT_BINARY_DIR}/database/"
+    COMMENT "Copying database files if different"
+)
+add_dependencies(apploginAndRegistration copy_database_files)
+
 include(GNUInstallDirs)
 install(TARGETS apploginAndRegistration
     BUNDLE DESTINATION .

@@ -1,6 +1,8 @@
 #include "databasemanager.h"
 #include <QDebug>
 #include <QObject>
+#include <QFile>
+#include <QTextStream>
 #include <QtSql>
 #include <QtQml/qqmlregistration.h>
 
@@ -16,20 +18,21 @@ DatabaseManager::DatabaseManager(QObject *parent)
 
 	if (!myDB.open()) {
 		qDebug() << "Error: connection with database failed";
-	} else {
-		QSqlQuery query;
-		query.exec("CREATE TABLE IF NOT EXISTS users("
-				   "username TEXT,"
-				   "password TEXT,"
-				   "fullname TEXT,"
-				   "email TEXT,"
-				   "phone TEXT,"
-				   "age INTEGER,"
-				   "gender TEXT,"
-				   "userrole TEXT,"
-				   "PRIMARY KEY (username)"
-				   ")");
+		return;
 	}
+
+	QFile schemaFile("./database/schema.sql");
+	if (!schemaFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+		qDebug() << "Database could not be created because the script file could not be opened.";
+		return;
+	}
+
+	QTextStream schemaStream(&schemaFile);
+	QString schemaContent = schemaStream.readAll();
+	QSqlQuery query;
+	query.exec(schemaContent);
+
+	schemaFile.close();
 }
 
 bool DatabaseManager::registerUser(const QString &username,
