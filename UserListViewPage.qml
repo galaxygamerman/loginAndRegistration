@@ -6,14 +6,14 @@ Item {
 	id: userListPage
 	signal goBack
 
+	ReturnButton {
+		text: "< Back"
+		onClicked: userListPage.goBack()
+	}
+
 	ColumnLayout {
 		anchors.fill: parent
 		anchors.margins: 20
-
-		ReturnButton {
-			text: "< Back"
-			onClicked: userListPage.goBack()
-		}
 
 		Text {
 			text: "User Directory (ListView)"

@@ -7,14 +7,14 @@ Item {
 	id: root
 	signal goBack
 
+	ReturnButton {
+		text: "< Back"
+		onClicked: root.goBack()
+	}
+
 	ColumnLayout {
 		anchors.fill: parent
 		anchors.margins: 20
-
-		ReturnButton {
-			text: "< Back"
-			onClicked: root.goBack()
-		}
 
 		Text {
 			text: "User Directory (TableView)"
