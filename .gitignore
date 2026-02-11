@@ -52,3 +52,7 @@ compile_commands.json
 *creator.user*
 
 *_qmlcache.qrc
+
+# Git Merge and Rebase backup files
+*.orig
+*.rej
