@@ -109,5 +109,20 @@ Item {
 				}
 			}
 		}
+		RowLayout {
+			anchors.top: loginLayout.bottom
+			width: loginLayout.width
+			anchors.topMargin: 30
+
+			spacing: 10
+
+			Button {
+				text: "View List"
+				Layout.fillWidth: true
+				Layout.fillHeight: true
+				Material.accent: "#008080"
+				onClicked: stack.push(userListViewPage) // Component ID from Main.qml
+			}
+		}
 	}
 }

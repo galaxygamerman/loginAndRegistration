@@ -50,4 +50,8 @@ Window {
 			onLogout: stack.pop()
 		}
 	}
+	Component{
+		id: userListViewPage
+		UserListViewPage{}
+	}
 }
