@@ -54,4 +54,8 @@ Window {
 		id: userListViewPage
 		UserListViewPage{}
 	}
+	Component{
+		id: userTableViewPage
+		UserTableViewPage{}
+	}
 }

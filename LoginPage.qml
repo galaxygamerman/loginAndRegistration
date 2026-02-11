@@ -123,6 +123,14 @@ Item {
 				Material.accent: "#008080"
 				onClicked: stack.push(userListViewPage) // Component ID from Main.qml
 			}
+
+			Button {
+				text: "View Table"
+				Layout.fillWidth: true
+				Layout.fillHeight: true
+				Material.accent: "#008080"
+				onClicked: stack.push(userTableViewPage) // Component ID from Main.qml
+			}
 		}
 	}
 }
