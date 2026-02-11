@@ -52,10 +52,14 @@ Window {
 	}
 	Component{
 		id: userListViewPage
-		UserListViewPage{}
+		UserListViewPage{
+			onGoBack: stack.pop()
+		}
 	}
 	Component{
 		id: userTableViewPage
-		UserTableViewPage{}
+		UserTableViewPage{
+			onGoBack: stack.pop()
+		}
 	}
 }
