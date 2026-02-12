@@ -4,13 +4,11 @@
 #include <QDebug>
 #include <QObject>
 #include <QtSql>
-#include <QtQml/qqmlregistration.h>
 
 class DatabaseManager : public QObject
 {
 private:
 	Q_OBJECT
-	QML_ELEMENT
 	QSqlDatabase myDB;
 
 public:

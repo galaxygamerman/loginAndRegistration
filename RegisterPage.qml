@@ -327,7 +327,7 @@ Item {
 								+ ` age: ${ageField.value}`
 								+ ` gender: ${genderGroup.checkedButton.text}`
 								+ ` role: ${roleBox.currentText}`)
-					let success = DatabaseManager.registerUser(userField.text,
+					let success = dbManager.registerUser(userField.text,
 														 pwdField.text,
 														 nameField.text,
 														 emailField.text,

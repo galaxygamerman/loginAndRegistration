@@ -84,13 +84,13 @@ Item {
 					console.log("Logging in..." + ` user: ${usernameInput.text}`
 								+ ` password: ${passwordInput.text}`
 								+ ` role: ${roleInput.currentText}`)
-					let success = DatabaseManager.checkUser(usernameInput.text, passwordInput.text, roleInput.currentText)
+					let success = dbManager.checkUser(usernameInput.text, passwordInput.text, roleInput.currentText)
 					if(!success){
 						console.error("Login was not possible")
 						loginPage.loginFailed()
 						return
 					}
-					let userData = DatabaseManager.getUserData(usernameInput.text)
+					let userData = dbManager.getUserData(usernameInput.text)
 					loginPage.loginCompleted(userData)
 				}
 			}

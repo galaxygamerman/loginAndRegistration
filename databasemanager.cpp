@@ -4,7 +4,6 @@
 #include <QFile>
 #include <QTextStream>
 #include <QtSql>
-#include <QtQml/qqmlregistration.h>
 
 DatabaseManager::DatabaseManager(QObject *parent)
 	: QObject(parent)
