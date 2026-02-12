@@ -8,6 +8,8 @@
 DatabaseManager::DatabaseManager(QObject *parent)
 	: QObject(parent)
 {
+	bool dbExists = QFile::exists("users.db");
+
 	if (QSqlDatabase::contains("qt_sql_default_connection")) {
 		myDB = QSqlDatabase::database("qt_sql_default_connection");
 	} else {
@@ -18,6 +20,13 @@ DatabaseManager::DatabaseManager(QObject *parent)
 	if (!myDB.open()) {
 		qDebug() << "Error: connection with database failed";
 		return;
+	}
+
+	if (dbExists){
+		qDebug() << "users.db file already detected. No need of running script.";
+		return;
+	}else{
+		qDebug() << "users.db file not detected. Creating table now";
 	}
 
 	QFile schemaFile("./database/schema.sql");
