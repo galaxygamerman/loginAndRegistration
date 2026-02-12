@@ -30,7 +30,7 @@ DatabaseManager::DatabaseManager(QObject *parent)
 		qDebug() << pathToDatabase << "file not detected. Creating table now";
 	}
 
-	QFile schemaFile("./database/schema.sql");
+	QFile schemaFile("database/schema.sql");
 	if (!schemaFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
 		qDebug() << "Database could not be created because the script file could not be opened.";
 		return;
