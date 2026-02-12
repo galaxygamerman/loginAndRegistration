@@ -27,6 +27,8 @@ public:
 	Q_INVOKABLE bool checkUser(const QString &username, const QString &password, const QString &userrole);
 
 	Q_INVOKABLE QVariantHash getUserData(const QString &username);
+
+	Q_INVOKABLE QVariantList getAllUserData();
 };
 
 #endif // DATABASEMANAGER_H

@@ -112,3 +112,22 @@ QVariantHash DatabaseManager::getUserData(const QString &username)
 	}
 	return userData;
 }
+
+QVariantList DatabaseManager::getAllUserData(){
+	QVariantList users;
+	QSqlQuery query("SELECT * FROM users");
+
+	while (query.next()) {
+		QVariantHash user;
+		user["username"] = query.value("username");
+		user["password"] = query.value("password");
+		user["fullname"] = query.value("fullname");
+		user["email"] = query.value("email");
+		user["phone"] = query.value("phone");
+		user["age"] = query.value("age");
+		user["gender"] = query.value("gender");
+		user["userrole"] = query.value("userrole");
+		users.append(user);
+	}
+	return users;
+}
