@@ -8,13 +8,14 @@
 DatabaseManager::DatabaseManager(QObject *parent)
 	: QObject(parent)
 {
-	bool dbExists = QFile::exists("users.db");
+	QString pathToDatabase = "database/users.db";
+	bool dbExists = QFile::exists(pathToDatabase);
 
 	if (QSqlDatabase::contains("qt_sql_default_connection")) {
 		myDB = QSqlDatabase::database("qt_sql_default_connection");
 	} else {
 		myDB = QSqlDatabase::addDatabase("QSQLITE");
-		myDB.setDatabaseName("users.db");
+		myDB.setDatabaseName(pathToDatabase);
 	}
 
 	if (!myDB.open()) {
@@ -23,10 +24,10 @@ DatabaseManager::DatabaseManager(QObject *parent)
 	}
 
 	if (dbExists){
-		qDebug() << "users.db file already detected. No need of running script.";
+		qDebug() << pathToDatabase << "file already detected. No need of running script.";
 		return;
 	}else{
-		qDebug() << "users.db file not detected. Creating table now";
+		qDebug() << pathToDatabase << "file not detected. Creating table now";
 	}
 
 	QFile schemaFile("./database/schema.sql");
