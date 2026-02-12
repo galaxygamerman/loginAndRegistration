@@ -118,7 +118,7 @@ QVariantList DatabaseManager::getAllUserData(){
 	QSqlQuery query("SELECT * FROM users");
 
 	while (query.next()) {
-		QVariantHash user;
+		QVariantMap user;
 		user["username"] = query.value("username");
 		user["password"] = query.value("password");
 		user["fullname"] = query.value("fullname");
