@@ -7,5 +7,7 @@ phone TEXT,
 age INTEGER,
 gender TEXT,
 userrole TEXT,
-PRIMARY KEY (username)
+PRIMARY KEY (username),
+UNIQUE (email),
+UNIQUE (phone)
 );
