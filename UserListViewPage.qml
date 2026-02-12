@@ -27,7 +27,7 @@ Item {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 			clip: true
-			model: UserListModel{}
+			model: UserListModel {}
 			spacing: 5
 
 			delegate: Rectangle {
@@ -41,14 +41,39 @@ Item {
 					anchors.fill: parent
 					anchors.margins: 10
 
-					Text{text: username}
-					Text{text: password}
-					Text{text: fullname}
-					Text{text: email}
-					Text{text: phone}
-					Text{text: age}
-					Text{text: gender}
-					Text{text: userrole}
+					Text {
+						text: username
+						Layout.preferredWidth: 100
+					}
+					Text {
+						text: password
+						Layout.preferredWidth: 120
+					}
+					Text {
+						text: fullname
+						Layout.preferredWidth: 100
+						wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+					}
+					Text {
+						text: email
+						Layout.preferredWidth: 160
+					}
+					Text {
+						text: phone
+						Layout.preferredWidth: 130
+					}
+					Text {
+						text: age
+						Layout.preferredWidth: 20
+					}
+					Text {
+						text: gender
+						Layout.preferredWidth: 50
+					}
+					Text {
+						text: userrole
+						Layout.preferredWidth: 60
+					}
 				}
 			}
 		}
