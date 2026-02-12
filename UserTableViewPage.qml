@@ -9,6 +9,7 @@ Item {
 
 	ReturnButton {
 		text: "< Back"
+		color: "darkgrey"
 		onClicked: root.goBack()
 	}
 

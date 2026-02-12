@@ -8,6 +8,7 @@ Item {
 
 	ReturnButton {
 		text: "< Back"
+		color: "darkgrey"
 		onClicked: userListPage.goBack()
 	}
 
