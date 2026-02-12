@@ -53,8 +53,7 @@ bool DatabaseManager::registerUser(const QString &username,
 								   const QString &gender,
 								   const QString &userrole)
 {
-	qDebug() << "In the backend: " << username << ' ' << password << ' ' << fullname << ' ' << email
-			 << ' ' << phone << ' ' << age << ' ' << gender << ' ' << userrole;
+	qDebug() << "In the backend:" << username << password << fullname << email << phone << age << gender << userrole;
 	QSqlQuery query;
 	query.prepare(
 		"INSERT INTO users (username, password, fullname, email, phone, age, gender, userrole)"
@@ -75,7 +74,7 @@ bool DatabaseManager::checkUser(const QString &username,
 								const QString &password,
 								const QString &userrole)
 {
-	qDebug() << "In the backend: " << username << ' ' << password << ' ' << userrole;
+	qDebug() << "In the backend:" << username << password << userrole;
 	QSqlQuery query;
 	query.prepare(
 		"SELECT username, password FROM users WHERE username = :username AND password = :password");
@@ -83,7 +82,7 @@ bool DatabaseManager::checkUser(const QString &username,
 	query.bindValue(":password", password);
 
 	if (!query.exec()) {
-		qDebug() << "User login failed: " << query.lastError().text();
+		qDebug() << "User login failed:" << query.lastError().text();
 		return false;
 	}
 
@@ -92,7 +91,7 @@ bool DatabaseManager::checkUser(const QString &username,
 
 QVariantMap DatabaseManager::getUserData(const QString &username)
 {
-	qDebug() << "Searching for " << username << "'s data...";
+	qDebug() << "Searching data for" << username << "...";
 	QSqlQuery query;
 	query.prepare("SELECT * FROM users WHERE username = :username");
 	query.bindValue(":username", username);
