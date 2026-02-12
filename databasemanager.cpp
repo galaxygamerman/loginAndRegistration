@@ -38,8 +38,13 @@ DatabaseManager::DatabaseManager(QObject *parent)
 
 	QTextStream schemaStream(&schemaFile);
 	QString schemaContent = schemaStream.readAll();
+
 	QSqlQuery query;
-	query.exec(schemaContent);
+	if(!query.exec(schemaContent)){
+		qDebug() << "Database" << pathToDatabase << "was not created:" << query.lastError().text();
+	} else {
+		qDebug() << "Database" << pathToDatabase << "was created successfully";
+	}
 
 	schemaFile.close();
 }
@@ -67,7 +72,13 @@ bool DatabaseManager::registerUser(const QString &username,
 	query.bindValue(":gender", gender);
 	query.bindValue(":userrole", userrole);
 
-	return query.exec();
+	if (!query.exec()) {
+		qDebug() << "User registration failed:" << query.lastError().text();
+		return false;
+	}
+
+	qDebug() << "User registration completed for" << username;
+	return true;
 }
 
 bool DatabaseManager::checkUser(const QString &username,
@@ -86,6 +97,7 @@ bool DatabaseManager::checkUser(const QString &username,
 		return false;
 	}
 
+	qDebug() << "User login successful.";
 	return query.next();
 }
 
@@ -98,6 +110,7 @@ QVariantMap DatabaseManager::getUserData(const QString &username)
 
 	QVariantMap userData;
 	if (query.exec() && query.next()) {
+		qDebug() << "User data for" << username << "retrieved successfully.";
 		userData["username"] = query.value("username");
 		userData["password"] = query.value("password");
 		userData["fullname"] = query.value("fullname");
@@ -108,6 +121,7 @@ QVariantMap DatabaseManager::getUserData(const QString &username)
 		userData["userrole"] = query.value("userrole");
 		userData["success"] = true;
 	} else {
+		qDebug() << "Error while getting data for" << username << query.lastError().text();
 		userData["success"] = false;
 	}
 	return userData;
