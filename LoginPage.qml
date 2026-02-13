@@ -109,12 +109,14 @@ Item {
 				}
 			}
 		}
-		RowLayout {
+
+		GridLayout {
 			anchors.top: loginLayout.bottom
 			width: loginLayout.width
 			anchors.topMargin: 30
-
-			spacing: 10
+			columns: 2
+			rowSpacing: 10
+			columnSpacing: 10
 
 			Button {
 				text: "View List"
