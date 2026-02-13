@@ -3,18 +3,7 @@
 
 #include <QAbstractListModel>
 #include <QObject>
-
-struct UserData
-{
-	QString username;
-	QString password;
-	QString fullname;
-	QString email;
-	QString phone;
-	QString age;
-	QString gender;
-	QString userrole;
-};
+#include "userdata.h"
 
 class UserAbstractListModel : public QAbstractListModel
 {

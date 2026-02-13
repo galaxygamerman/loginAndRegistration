@@ -31,6 +31,7 @@ qt_add_qml_module(apploginAndRegistration
         QML_FILES BackgroundCard.qml
         QML_FILES UserListModel.qml
         QML_FILES UserTableModel.qml
+        SOURCES userdata.h
         SOURCES userabstractlistmodel.h userabstractlistmodel.cpp
 )
 
