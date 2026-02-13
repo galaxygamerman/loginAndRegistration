@@ -68,4 +68,10 @@ Window {
 			onGoBack: stack.pop()
 		}
 	}
+	Component{
+		id: userAbstractTableViewPage
+		UserAbstractTableViewPage{
+			onGoBack: stack.pop()
+		}
+	}
 }

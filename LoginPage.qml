@@ -125,7 +125,6 @@ Item {
 				Material.accent: "#008080"
 				onClicked: stack.push(userListViewPage) // Component ID from Main.qml
 			}
-
 			Button {
 				text: "View Table"
 				Layout.fillWidth: true
@@ -139,6 +138,13 @@ Item {
 				Layout.fillHeight: true
 				Material.accent: "#008080"
 				onClicked: stack.push(userAbstractListViewPage) // Component ID from Main.qml
+			}
+			Button {
+				text: "View Abstract Table"
+				Layout.fillWidth: true
+				Layout.fillHeight: true
+				Material.accent: "#008080"
+				onClicked: stack.push(userAbstractTableViewPage) // Component ID from Main.qml
 			}
 		}
 	}
