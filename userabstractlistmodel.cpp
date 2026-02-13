@@ -37,6 +37,7 @@ QHash<int, QByteArray> UserAbstractListModel::roleNames() const {
 }
 
 void UserAbstractListModel::fetchUsers() {
+	beginResetModel();
 	this->userDataList.clear();
 	QSqlQuery query("SELECT * FROM users");
 	while (query.next()) {
@@ -49,4 +50,5 @@ void UserAbstractListModel::fetchUsers() {
 								   query.value("gender").toString(),
 								   query.value("userrole").toString()});
 	}
+	endResetModel();
 }

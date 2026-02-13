@@ -47,6 +47,7 @@ QVariant UserAbstractTableModel::headerData(int section,
 }
 
 void UserAbstractTableModel::fetchUsers() {
+	beginResetModel();
 	this->userDataList.clear();
 	QSqlQuery query("SELECT * FROM users");
 	while (query.next()) {
@@ -59,4 +60,5 @@ void UserAbstractTableModel::fetchUsers() {
 								   query.value("gender").toString(),
 								   query.value("userrole").toString()});
 	}
+	endResetModel();
 }
