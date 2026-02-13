@@ -115,8 +115,8 @@ Item {
 			width: loginLayout.width
 			anchors.topMargin: 30
 			columns: 2
-			rowSpacing: 10
-			columnSpacing: 10
+			rowSpacing: 5
+			columnSpacing: 5
 
 			Button {
 				text: "View List"
@@ -132,6 +132,13 @@ Item {
 				Layout.fillHeight: true
 				Material.accent: "#008080"
 				onClicked: stack.push(userTableViewPage) // Component ID from Main.qml
+			}
+			Button {
+				text: "View Abstract List"
+				Layout.fillWidth: true
+				Layout.fillHeight: true
+				Material.accent: "#008080"
+				onClicked: stack.push(userAbstractListViewPage) // Component ID from Main.qml
 			}
 		}
 	}
