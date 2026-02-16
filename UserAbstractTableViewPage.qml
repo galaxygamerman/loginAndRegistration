@@ -1,5 +1,5 @@
 import QtQuick
-import QtQuick.Controls
+import QtQuick.Controls.Material
 import QtQuick.Layouts
 import Qt.labs.qmlmodels 1.0
 
@@ -11,6 +11,11 @@ Item {
 		text: "< Back"
 		color: "darkgrey"
 		onClicked: root.goBack()
+	}
+
+	DeleteConfirmationDialog {
+		id: deleteConfirmationDialog
+		anchors.centerIn: parent
 	}
 
 	ColumnLayout {
@@ -66,7 +71,13 @@ Item {
 						Material.background: "#ff2525"
 						text: "Delete"
 						Layout.fillWidth: true
-						onClicked: userAbstractTableModel.removeRows(row, 1)
+						onClicked: {
+							let username = userAbstractTableModel.data(userAbstractTableModel.index(row,0))
+							deleteConfirmationDialog.text = "Are you sure you want to delete user <b>" + username + "</b>? This action cannot be undone."
+							deleteConfirmationDialog.usernameToDelete = username
+							deleteConfirmationDialog.rowToDelete = row
+							deleteConfirmationDialog.open()
+						}
 					}
 				}
 			}

@@ -27,6 +27,7 @@ qt_add_qml_module(apploginAndRegistration
         QML_FILES BackgroundImage.qml
         QML_FILES ReturnButton.qml
         QML_FILES BackgroundCard.qml
+        QML_FILES DeleteConfirmationDialog.qml
         SOURCES userdata.h
         SOURCES userabstracttablemodel.h userabstracttablemodel.cpp
 )
