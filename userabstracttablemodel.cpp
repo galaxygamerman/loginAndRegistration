@@ -64,3 +64,25 @@ void UserAbstractTableModel::fetchUsers() {
 	}
 	endResetModel();
 }
+
+bool UserAbstractTableModel::removeRows(int row, int count, const QModelIndex &parent) {
+	if (row < 0 || row + count > this->userDataList.size()) return false;
+
+	beginRemoveRows(parent, row, row + count - 1);
+	for (uint i = 0; i < count; i++) {
+		QString username = this->userDataList.at(row).username;
+
+		QSqlQuery query;
+		query.prepare("DELETE FROM users WHERE username = :username");
+		query.bindValue(":username", username);
+
+		if (!query.exec()) {
+			endRemoveRows();
+			return false;
+		}
+		this->userDataList.removeAt(row);
+	}
+
+	endRemoveRows();
+	return true;
+}

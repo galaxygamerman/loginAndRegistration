@@ -66,7 +66,7 @@ Item {
 						Material.background: "#ff2525"
 						text: "Delete"
 						Layout.fillWidth: true
-						onClicked: console.debug('delete pressed')
+						onClicked: userAbstractTableModel.removeRows(row, 1)
 					}
 				}
 			}
