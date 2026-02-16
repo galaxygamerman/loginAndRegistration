@@ -54,6 +54,14 @@ Window {
 		id: userAbstractTableViewPage
 		UserAbstractTableViewPage{
 			onGoBack: stack.pop()
+			onEditPressed: stack.push(editPage)
+		}
+	}
+	Component{
+		id: editPage
+		EditPage{
+			onGoBack: stack.pop()
+			onEditCompleted: stack.pop()
 		}
 	}
 }

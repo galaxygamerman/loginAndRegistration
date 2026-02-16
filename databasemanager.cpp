@@ -101,6 +101,43 @@ bool DatabaseManager::checkUser(const QString &username,
 	return query.next();
 }
 
+bool DatabaseManager::editUser(const QString &username,
+							   const QString &password,
+							   const QString &fullname,
+							   const QString &email,
+							   const QString &phone,
+							   const QString &age,
+							   const QString &gender,
+							   const QString &userrole) {
+	qDebug() << "In the backend:" << username << password << fullname << email << phone << age << gender << userrole;
+	QSqlQuery query;
+	query.prepare("UPDATE users"
+				  " SET password = :password,"
+				  "fullname = :fullname,"
+				  "email = :email,"
+				  "phone = :phone,"
+				  "age = :age,"
+				  "gender = :gender,"
+				  "userrole = :userrole"
+				  " WHERE username = :username");
+	query.bindValue(":username", username);
+	query.bindValue(":password", password);
+	query.bindValue(":fullname", fullname);
+	query.bindValue(":email", email);
+	query.bindValue(":phone", phone);
+	query.bindValue(":age", age);
+	query.bindValue(":gender", gender);
+	query.bindValue(":userrole", userrole);
+
+	if (!query.exec()) {
+		qDebug() << "User modification failed:" << query.lastError().text();
+		return false;
+	}
+
+	qDebug() << "User modification completed for" << username;
+	return true;
+}
+
 QVariantMap DatabaseManager::getUserData(const QString &username)
 {
 	qDebug() << "Searching data for" << username << "...";
