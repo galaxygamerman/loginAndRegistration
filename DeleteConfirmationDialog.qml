@@ -11,9 +11,20 @@ Dialog {
     title: "Confirm Deletion"
     width: 300
     modal: true
-    standardButtons: Dialog.Ok | Dialog.Cancel
     Material.accent: "#008080"
     Material.background: "snow"
+    footer: DialogButtonBox {
+        Button {
+            text: "Delete"
+            DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
+            flat: true
+        }
+        Button {
+            text: "Cancel"
+            DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
+            flat: true
+        }
+    }
     onAccepted: {
         userAbstractTableModel.removeRows(rowToDelete, 1)
         console.log("Deleted user:", usernameToDelete)
