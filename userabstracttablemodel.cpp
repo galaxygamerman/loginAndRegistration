@@ -48,23 +48,6 @@ QVariant UserAbstractTableModel::headerData(int section,
 	}
 }
 
-void UserAbstractTableModel::fetchUsers() {
-	beginResetModel();
-	this->userDataList.clear();
-	QSqlQuery query("SELECT * FROM users");
-	while (query.next()) {
-		this->userDataList.append({query.value("username").toString(),
-								   query.value("password").toString(),
-								   query.value("fullname").toString(),
-								   query.value("email").toString(),
-								   query.value("phone").toString(),
-								   query.value("age").toString(),
-								   query.value("gender").toString(),
-								   query.value("userrole").toString()});
-	}
-	endResetModel();
-}
-
 bool UserAbstractTableModel::removeRows(int row, int count, const QModelIndex &parent) {
 	if (row < 0 || row + count > this->userDataList.size()) return false;
 
@@ -90,4 +73,21 @@ bool UserAbstractTableModel::removeRows(int row, int count, const QModelIndex &p
 	endRemoveRows();
 	db.commit();
 	return true;
+}
+
+void UserAbstractTableModel::fetchUsers() {
+	beginResetModel();
+	this->userDataList.clear();
+	QSqlQuery query("SELECT * FROM users");
+	while (query.next()) {
+		this->userDataList.append({query.value("username").toString(),
+								   query.value("password").toString(),
+								   query.value("fullname").toString(),
+								   query.value("email").toString(),
+								   query.value("phone").toString(),
+								   query.value("age").toString(),
+								   query.value("gender").toString(),
+								   query.value("userrole").toString()});
+	}
+	endResetModel();
 }
