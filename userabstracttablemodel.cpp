@@ -9,7 +9,7 @@ int UserAbstractTableModel::rowCount(const QModelIndex &parent) const {
 }
 
 int UserAbstractTableModel::columnCount(const QModelIndex &parent) const {
-	return 8;
+	return 9;
 }
 
 QVariant UserAbstractTableModel::data(const QModelIndex &index, int role) const {
@@ -25,6 +25,7 @@ QVariant UserAbstractTableModel::data(const QModelIndex &index, int role) const 
 		case 5: return data.age;
 		case 6: return data.gender;
 		case 7: return data.userrole;
+		case 8: return QVariant("");
 		default: return QVariant();
 	}
 }
@@ -42,6 +43,7 @@ QVariant UserAbstractTableModel::headerData(int section,
 		case 5: return "Age";
 		case 6: return "Gender";
 		case 7: return "User Role";
+		case 8: return "Actions";
 		default: return QVariant();
 	}
 }

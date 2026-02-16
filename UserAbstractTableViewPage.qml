@@ -38,7 +38,7 @@ Item {
 			model: userAbstractTableModel
 
 			delegate: Rectangle {
-				implicitWidth: 150
+				implicitWidth: column === 8 ? 200 : 150
 				implicitHeight: 40
 				border.color: "snow"
 				color: "white"
@@ -51,6 +51,23 @@ Item {
 					elide: Text.ElideRight
 					width: parent.width - 10
 					horizontalAlignment: Text.AlignHCenter
+				}
+				RowLayout {
+					anchors.fill: parent
+					enabled: column === 8
+					visible: column === 8
+					Button {
+						text: "Edit"
+						Material.background: "#008080"
+						Layout.fillWidth: true
+						onClicked: console.debug('edit pressed')
+					}
+					Button {
+						Material.background: "#ff2525"
+						text: "Delete"
+						Layout.fillWidth: true
+						onClicked: console.debug('delete pressed')
+					}
 				}
 			}
 		}
