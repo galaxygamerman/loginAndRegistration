@@ -20,9 +20,6 @@ qt_add_qml_module(apploginAndRegistration
         QML_FILES LoginPage.qml
         QML_FILES RegisterPage.qml
         QML_FILES DashboardPage.qml
-        QML_FILES UserListViewPage.qml
-        QML_FILES UserTableViewPage.qml
-        QML_FILES UserAbstractListViewPage.qml
         QML_FILES UserAbstractTableViewPage.qml
         SOURCES databasemanager.h databasemanager.cpp
         RESOURCES assets.qrc
@@ -30,10 +27,7 @@ qt_add_qml_module(apploginAndRegistration
         QML_FILES BackgroundImage.qml
         QML_FILES ReturnButton.qml
         QML_FILES BackgroundCard.qml
-        QML_FILES UserListModel.qml
-        QML_FILES UserTableModel.qml
         SOURCES userdata.h
-        SOURCES userabstractlistmodel.h userabstractlistmodel.cpp
         SOURCES userabstracttablemodel.h userabstracttablemodel.cpp
 )
 
