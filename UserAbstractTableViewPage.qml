@@ -82,7 +82,6 @@ Item {
 					}
 				}
 			}
-			Component.onCompleted: userAbstractTableModel.fetchUsers()
 		}
 	}
 }
