@@ -92,7 +92,7 @@ void UserAbstractTableModel::fetchUsers() {
 	endResetModel();
 }
 
-bool UserAbstractTableModel::updateUsers(const int row, const QVariantMap &newData) {
+bool UserAbstractTableModel::updateRows(const int row, const QVariantMap &newData) {
 	if (row < 0 || row >= this->userDataList.size()) return false;
 
 	QString oldUsername = this->userDataList[row].username;
