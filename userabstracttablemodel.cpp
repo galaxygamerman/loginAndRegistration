@@ -128,6 +128,15 @@ bool UserAbstractTableModel::updateUsers(const int row, const QVariantMap &newDa
 		return false;
 	}
 
+	this->userDataList[row] = (UserData) {.username = newData["username"].toString(),
+										  .password = newData["password"].toString(),
+										  .fullname = newData["fullname"].toString(),
+										  .email = newData["email"].toString(),
+										  .phone = newData["phone"].toString(),
+										  .age = newData["age"].toString(),
+										  .gender = newData["gender"].toString(),
+										  .userrole = newData["userrole"].toString()};
+
 	emit dataChanged(index(row, 0), index(row, 8), {DisplayRole});
 	qDebug() << "User modification completed for" << newData["username"];
 	return true;
