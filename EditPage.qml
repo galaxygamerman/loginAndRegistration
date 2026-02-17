@@ -11,6 +11,33 @@ Item {
 	signal goBack
 	signal editCompleted
 
+	Component.onCompleted: {
+		let username = userAbstractTableModel.data(userAbstractTableModel.index(currentRow,0)) || ""
+		let password = userAbstractTableModel.data(userAbstractTableModel.index(currentRow,1)) || ""
+		let fullname = userAbstractTableModel.data(userAbstractTableModel.index(currentRow,2)) || ""
+		let email    = userAbstractTableModel.data(userAbstractTableModel.index(currentRow,3)) || ""
+		let phone    = userAbstractTableModel.data(userAbstractTableModel.index(currentRow,4)) || ""
+		let age      = userAbstractTableModel.data(userAbstractTableModel.index(currentRow,5)) || ageField.from
+		let gender   = userAbstractTableModel.data(userAbstractTableModel.index(currentRow,6)) || ""
+		let userrole = userAbstractTableModel.data(userAbstractTableModel.index(currentRow,7)) || ""
+		userField.text = username
+		pwdField.text = password
+		confirmPwdField.text = pwdField.text
+		nameField.text = fullname
+		emailField.text = email
+		phoneField.text = phone
+		ageField.value= age
+		for (var btn of [maleRadio,femaleRadio,otherRadio]){
+			btn.checked = gender === btn.text
+		}
+		for(let i=0;i<roleBox.model.count;i++){
+			if(userrole === roleBox.model.get(i).text){
+				roleBox.currentIndex = i
+				break
+			}
+		}
+	}
+
 	BackgroundImage {
 		id: backgroundImage
 		anchors.fill: parent
