@@ -54,7 +54,7 @@ Window {
 		id: userAbstractTableViewPage
 		UserAbstractTableViewPage{
 			onGoBack: stack.pop()
-			onEditPressed: stack.push(editPage)
+			onEditPressed: row => {stack.push(editPage,{currentRow: row})}
 		}
 	}
 	Component{

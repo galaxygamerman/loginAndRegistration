@@ -91,3 +91,44 @@ void UserAbstractTableModel::fetchUsers() {
 	}
 	endResetModel();
 }
+
+bool UserAbstractTableModel::updateUsers(const int row, const QVariantMap &newData) {
+	if (row < 0 || row >= this->userDataList.size()) return false;
+
+	QString oldUsername = this->userDataList[row].username;
+
+	qDebug() << "In the backend:" << row << oldUsername << newData["username"]
+			 << newData["password"] << newData["fullname"] << newData["email"] << newData["phone"]
+			 << newData["age"] << newData["gender"] << newData["userrole"];
+
+	QSqlQuery query;
+	query.prepare("UPDATE users"
+				  " SET "
+				  "username = :newUsername,"
+				  "password = :password,"
+				  "fullname = :fullname,"
+				  "email = :email,"
+				  "phone = :phone,"
+				  "age = :age,"
+				  "gender = :gender,"
+				  "userrole = :userrole"
+				  " WHERE username = :oldUsername");
+	query.bindValue(":oldUsername", oldUsername);
+	query.bindValue(":newUsername", newData["username"]);
+	query.bindValue(":password", newData["password"]);
+	query.bindValue(":fullname", newData["fullname"]);
+	query.bindValue(":email", newData["email"]);
+	query.bindValue(":phone", newData["phone"]);
+	query.bindValue(":age", newData["age"]);
+	query.bindValue(":gender", newData["gender"]);
+	query.bindValue(":userrole", newData["userrole"]);
+
+	if (!query.exec()) {
+		qCritical() << "User modification failed:" << query.lastError().text();
+		return false;
+	}
+
+	emit dataChanged(index(row, 0), index(row, 8), {DisplayRole});
+	qDebug() << "User modification completed for" << newData["username"];
+	return true;
+}

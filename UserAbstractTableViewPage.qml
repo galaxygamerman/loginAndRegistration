@@ -6,7 +6,7 @@ import Qt.labs.qmlmodels 1.0
 Item {
 	id: root
 	signal goBack
-	signal editPressed
+	signal editPressed(int row)
 
 	ReturnButton {
 		text: "< Back"
@@ -66,7 +66,7 @@ Item {
 						text: "Edit"
 						Material.background: "#008080"
 						Layout.fillWidth: true
-						onClicked: root.editPressed()
+						onClicked: root.editPressed(row)
 					}
 					Button {
 						Material.background: "#ff2525"

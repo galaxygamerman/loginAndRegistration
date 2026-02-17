@@ -7,6 +7,7 @@ Item {
 	implicitWidth: 640
 	implicitHeight: 480
 
+	property int currentRow: -1
 	signal goBack
 	signal editCompleted
 
@@ -57,7 +58,7 @@ Item {
 				ColumnLayout {
 					spacing: 5
 					Label {
-						text: "Username (cannot be changed)"
+						text: "Username"
 						font.bold: true
 					}
 					TextField {
@@ -326,19 +327,22 @@ Item {
 								+ ` age: ${ageField.value}`
 								+ ` gender: ${genderGroup.checkedButton.text}`
 								+ ` role: ${roleBox.currentText}`)
-					let success = dbManager.editUser(userField.text,
-													 pwdField.text,
-													 nameField.text,
-													 emailField.text,
-													 phoneField.text,
-													 ageField.value,
-													 genderGroup.checkedButton.text,
-													 roleBox.currentText)
-					if(!success) {
+					let newData = {
+						"username": userField.text,
+						"password": pwdField.text,
+						"fullname": nameField.text,
+						"email": emailField.text,
+						"phone": phoneField.text,
+						"age": ageField.value,
+						"gender": genderGroup.checkedButton.text,
+						"userrole": roleBox.currentText
+					}
+					let success = userAbstractTableModel.updateUsers(root.currentRow, newData)
+
+					if (!success) {
 						console.error("Editing was not made.")
 						return
 					}
-					userAbstractTableModel.fetchUsers()
 					root.editCompleted()
 				}
 			}
