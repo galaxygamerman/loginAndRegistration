@@ -40,13 +40,27 @@ DatabaseManager::DatabaseManager(QObject *parent)
 	QString schemaContent = schemaStream.readAll();
 
 	QSqlQuery query;
-	if(!query.exec(schemaContent)){
+	if (!query.exec(schemaContent)) {
 		qDebug() << "Database" << pathToDatabase << "was not created:" << query.lastError().text();
 	} else {
 		qDebug() << "Database" << pathToDatabase << "was created successfully";
 	}
 
 	schemaFile.close();
+
+	// // for testing only. These should not exceute during prod
+	// query.exec(
+	// 	"INSERT INTO users (username, password, fullname, email, phone, age, gender, userrole)"
+	// 	"VALUES ('admin','password','admin','admin@org.org','0000000000',200,'Other','Admin')");
+	// query.exec(
+	// 	"INSERT INTO users (username, password, fullname, email, phone, age, gender, userrole)"
+	// 	"VALUES ('_1','11111111','11111111','1111@org.org','1111111111',101,'Male','Staff')");
+	// query.exec(
+	// 	"INSERT INTO users (username, password, fullname, email, phone, age, gender, userrole)"
+	// 	"VALUES ('_2','22222222','22222222','2222@org.org','2222222222',102,'Female','Staff')");
+	// query.exec(
+	// 	"INSERT INTO users (username, password, fullname, email, phone, age, gender, userrole)"
+	// 	"VALUES ('_3','33333333','33333333','3333@org.org','3333333333',103,'Female','Guest')");
 }
 
 bool DatabaseManager::registerUser(const QString &username,
