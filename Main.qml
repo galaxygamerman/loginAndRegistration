@@ -51,6 +51,24 @@ Window {
 		}
 	}
 	Component{
+		id: userListViewPage
+		UserListViewPage{
+			onGoBack: stack.pop()
+		}
+	}
+	Component{
+		id: userTableViewPage
+		UserTableViewPage{
+			onGoBack: stack.pop()
+		}
+	}
+	Component{
+		id: userAbstractListViewPage
+		UserAbstractListViewPage{
+			onGoBack: stack.pop()
+		}
+	}
+	Component{
 		id: userAbstractTableViewPage
 		UserAbstractTableViewPage{
 			onGoBack: stack.pop()
