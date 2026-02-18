@@ -29,6 +29,7 @@ public:
 	// Q_INVOKABLE methods
 	Q_INVOKABLE void fetchUsers();
 	Q_INVOKABLE bool updateRow(const int row, const QVariantMap &newData);
+	Q_INVOKABLE bool setDataOrUpdateRow(const QModelIndex &index, const QVariantMap &newData, int role = EditRole);
 };
 
 #endif // USERABSTRACTTABLEMODEL_H

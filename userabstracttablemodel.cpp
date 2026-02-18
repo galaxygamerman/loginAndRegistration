@@ -1,5 +1,6 @@
 #include "userabstracttablemodel.h"
 #include "databasemanager.h"
+#include <vector>
 
 UserAbstractTableModel::UserAbstractTableModel(DatabaseManager *dbPtr, QObject *parent)
 	: QAbstractTableModel{parent}
@@ -34,46 +35,25 @@ QVariant UserAbstractTableModel::data(const QModelIndex &index, int role) const 
 bool UserAbstractTableModel::setData(const QModelIndex &index, const QVariant &value, int role) {
 	if (!index.isValid() || role != EditRole) return false;
 
-	UserData data = this->userDataList[index.row()];
+	// Find out which tablefield to set
+	UserData &data = this->userDataList[index.row()];
 	QString fieldToBeUpdated;
 	switch (index.column()) {
-		case 0:
-			fieldToBeUpdated = "username";
-			data.username = value.toString();
-			break;
-		case 1:
-			fieldToBeUpdated = "password";
-			data.password = value.toString();
-			break;
-		case 2:
-			fieldToBeUpdated = "fullname";
-			data.fullname = value.toString();
-			break;
-		case 3:
-			fieldToBeUpdated = "email";
-			data.email = value.toString();
-			break;
-		case 4:
-			fieldToBeUpdated = "phone";
-			data.phone = value.toString();
-			break;
-		case 5:
-			fieldToBeUpdated = "age";
-			data.age = value.toString();
-			break;
-		case 6:
-			fieldToBeUpdated = "gender";
-			data.gender = value.toString();
-			break;
-		case 7:
-			fieldToBeUpdated = "userrole";
-			data.userrole = value.toString();
-			break;
+		case 0: fieldToBeUpdated = "username"; break;
+		case 1: fieldToBeUpdated = "password"; break;
+		case 2: fieldToBeUpdated = "fullname"; break;
+		case 3: fieldToBeUpdated = "email"; break;
+		case 4: fieldToBeUpdated = "phone"; break;
+		case 5: fieldToBeUpdated = "age"; break;
+		case 6: fieldToBeUpdated = "gender"; break;
+		case 7: fieldToBeUpdated = "userrole"; break;
 		default:
-			qCritical() << "UserAbstractTableModel::setData:" << "Column index is not editable.";
+			qCritical() << "UserAbstractTableModel::setData:"
+						<< "Column index is not editable.";
 			return false;
 	}
 
+	// Update the Database
 	QSqlQuery query;
 	QString statement = QString("UPDATE users SET %1 = :value where username = :username").arg(fieldToBeUpdated);
 	query.prepare(statement);
@@ -83,6 +63,22 @@ bool UserAbstractTableModel::setData(const QModelIndex &index, const QVariant &v
 	if (!query.exec()) {
 		qCritical() << "UserAbstractTableModel::setData:" << "Query did not execute successfully";
 		return false;
+	}
+
+	// Update the value in the UI
+	switch (index.column()) {
+		case 0: data.username = value.toString(); break;
+		case 1: data.password = value.toString(); break;
+		case 2: data.fullname = value.toString(); break;
+		case 3: data.email = value.toString(); break;
+		case 4: data.phone = value.toString(); break;
+		case 5: data.age = value.toString(); break;
+		case 6: data.gender = value.toString(); break;
+		case 7: data.userrole = value.toString(); break;
+		default:
+			qCritical() << "UserAbstractTableModel::setData:"
+						<< "Column index is not editable.";
+			return false;
 	}
 
 	emit dataChanged(index, index, {Qt::DisplayRole, Qt::EditRole});
@@ -178,4 +174,33 @@ bool UserAbstractTableModel::updateRow(const int row, const QVariantMap &newData
 	emit dataChanged(index(row, 0), index(row, 8), {DisplayRole});
 	qDebug() << "User modification completed for" << newData["username"];
 	return true;
+}
+
+bool UserAbstractTableModel::setDataOrUpdateRow(const QModelIndex &index, const QVariantMap &newData, int role) {
+	UserData userData = this->userDataList[index.row()];
+	std::vector<bool> wasEdited = {newData["username"] != userData.username,
+									newData["password"] != userData.password,
+									newData["fullname"] != userData.fullname,
+									newData["email"] != userData.email,
+									newData["phone"] != userData.phone,
+									newData["age"] != userData.age,
+									newData["gender"] != userData.gender,
+									newData["userrole"] != userData.userrole};
+
+	int total = wasEdited.size(),
+		count = std::count(wasEdited.begin(), wasEdited.end(), true);
+
+	if (count >= total / 2) {
+		return this->updateRow(index.row(), newData);
+	} else {
+		QStringList fieldnames
+			= {"username", "password", "fullname", "email", "phone", "age", "gender", "userrole"};
+		std::vector<bool> &success = wasEdited;
+		for (int i = 0; i < total; ++i) {
+			success[i] = wasEdited[i]? this->setData(this->index(index.row(), i), newData[fieldnames[i]], EditRole) : true;
+		}
+		// Check if all succeeded, return false if even one of them returns false
+		if (std::count(success.begin(), success.end(), false)) return false;
+		return true;
+	}
 }

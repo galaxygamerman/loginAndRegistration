@@ -365,7 +365,7 @@ Item {
 						"gender": genderGroup.checkedButton.text,
 						"userrole": roleBox.currentText
 					}
-					let success = userAbstractTableModel.updateRow(root.currentRow, newData)
+					let success = userAbstractTableModel.setDataOrUpdateRow(userAbstractTableModel.index(root.currentRow,0), newData)
 
 					if (!success) {
 						root.editFailed()
