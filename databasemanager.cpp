@@ -160,6 +160,43 @@ QVariantList DatabaseManager::getAllUserData(){
 	return users;
 }
 
+bool DatabaseManager::updateUser(const QString &oldUsername,
+								 const QString &newUsername,
+								 const QString &password,
+								 const QString &fullname,
+								 const QString &email,
+								 const QString &phone,
+								 const QString &age,
+								 const QString &gender,
+								 const QString &userrole) {
+	QSqlQuery query;
+	query.prepare("UPDATE users"
+				  " SET "
+				  "username = :newUsername,"
+				  "password = :password,"
+				  "fullname = :fullname,"
+				  "email = :email,"
+				  "phone = :phone,"
+				  "age = :age,"
+				  "gender = :gender,"
+				  "userrole = :userrole"
+				  " WHERE username = :oldUsername");
+	query.bindValue(":oldUsername", oldUsername);
+	query.bindValue(":newUsername", newUsername);
+	query.bindValue(":password",password);
+	query.bindValue(":fullname", fullname);
+	query.bindValue(":email", email);
+	query.bindValue(":phone", phone);
+	query.bindValue(":age", age);
+	query.bindValue(":gender", gender);
+	query.bindValue(":userrole", userrole);
+
+	if (!query.exec()) {
+		return false;
+	}
+	return true;
+}
+
 bool DatabaseManager::deleteUsers(const QStringList &usernames) {
 	if (!this->myDB.transaction()) return false;
 

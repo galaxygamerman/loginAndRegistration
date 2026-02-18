@@ -92,46 +92,29 @@ bool UserAbstractTableModel::updateRows(const int row, const QVariantMap &newDat
 	if (row < 0 || row >= this->userDataList.size()) return false;
 
 	QString oldUsername = this->userDataList[row].username;
+	qDebug() << "In the backend:" << row << oldUsername << newData;
 
-	qDebug() << "In the backend:" << row << oldUsername << newData["username"]
-			 << newData["password"] << newData["fullname"] << newData["email"] << newData["phone"]
-			 << newData["age"] << newData["gender"] << newData["userrole"];
+	UserData newUserData = {.username = newData["username"].toString(),
+							.password = newData["password"].toString(),
+							.fullname = newData["fullname"].toString(),
+							.email = newData["email"].toString(),
+							.phone = newData["phone"].toString(),
+							.age = newData["age"].toString(),
+							.gender = newData["gender"].toString(),
+							.userrole = newData["userrole"].toString()};
 
-	QSqlQuery query;
-	query.prepare("UPDATE users"
-				  " SET "
-				  "username = :newUsername,"
-				  "password = :password,"
-				  "fullname = :fullname,"
-				  "email = :email,"
-				  "phone = :phone,"
-				  "age = :age,"
-				  "gender = :gender,"
-				  "userrole = :userrole"
-				  " WHERE username = :oldUsername");
-	query.bindValue(":oldUsername", oldUsername);
-	query.bindValue(":newUsername", newData["username"]);
-	query.bindValue(":password", newData["password"]);
-	query.bindValue(":fullname", newData["fullname"]);
-	query.bindValue(":email", newData["email"]);
-	query.bindValue(":phone", newData["phone"]);
-	query.bindValue(":age", newData["age"]);
-	query.bindValue(":gender", newData["gender"]);
-	query.bindValue(":userrole", newData["userrole"]);
+	bool success = this->dbManager->updateUser(oldUsername,
+											   newUserData.username,
+											   newUserData.password,
+											   newUserData.fullname,
+											   newUserData.email,
+											   newUserData.phone,
+											   newUserData.age,
+											   newUserData.gender,
+											   newUserData.userrole);
+	if (!success) return false;
 
-	if (!query.exec()) {
-		qCritical() << "User modification failed:" << query.lastError().text();
-		return false;
-	}
-
-	this->userDataList[row] = (UserData) {.username = newData["username"].toString(),
-										  .password = newData["password"].toString(),
-										  .fullname = newData["fullname"].toString(),
-										  .email = newData["email"].toString(),
-										  .phone = newData["phone"].toString(),
-										  .age = newData["age"].toString(),
-										  .gender = newData["gender"].toString(),
-										  .userrole = newData["userrole"].toString()};
+	this->userDataList[row] = newUserData;
 
 	emit dataChanged(index(row, 0), index(row, 8), {DisplayRole});
 	qDebug() << "User modification completed for" << newData["username"];

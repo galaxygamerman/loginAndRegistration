@@ -26,6 +26,15 @@ public:
 	Q_INVOKABLE bool checkUser(const QString &username, const QString &password, const QString &userrole);
 	Q_INVOKABLE QVariantMap getUserData(const QString &username);
 	Q_INVOKABLE QVariantList getAllUserData();
+	Q_INVOKABLE bool updateUser(const QString &oldUsername,
+								const QString &newUsername,
+								const QString &password,
+								const QString &fullname,
+								const QString &email,
+								const QString &phone,
+								const QString &age,
+								const QString &gender,
+								const QString &userrole);
 	Q_INVOKABLE bool deleteUsers(const QStringList &usernames);
 };
 
