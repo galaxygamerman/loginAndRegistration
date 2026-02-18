@@ -17,11 +17,12 @@ public:
 	explicit UserAbstractTableModel(DatabaseManager *dbPtr = new DatabaseManager(), QObject *parent = nullptr);
 
 	// QAbstractItemModel interface
-	enum UserRoles { DisplayRole = Qt::DisplayRole };
+	enum UserRoles { DisplayRole = Qt::DisplayRole, EditRole = Qt::DisplayRole };
 
 	int rowCount(const QModelIndex &parent) const override;
 	int columnCount(const QModelIndex &parent) const override;
 	QVariant data(const QModelIndex &index, int role) const override;
+	bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 	QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 	bool removeRows(int row, int count, const QModelIndex &parent) override;
 

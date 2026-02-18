@@ -31,6 +31,65 @@ QVariant UserAbstractTableModel::data(const QModelIndex &index, int role) const 
 	}
 }
 
+bool UserAbstractTableModel::setData(const QModelIndex &index, const QVariant &value, int role) {
+	if (!index.isValid() || role != EditRole) return false;
+
+	UserData data = this->userDataList[index.row()];
+	QString fieldToBeUpdated;
+	switch (index.column()) {
+		case 0:
+			fieldToBeUpdated = "username";
+			data.username = value.toString();
+			break;
+		case 1:
+			fieldToBeUpdated = "password";
+			data.password = value.toString();
+			break;
+		case 2:
+			fieldToBeUpdated = "fullname";
+			data.fullname = value.toString();
+			break;
+		case 3:
+			fieldToBeUpdated = "email";
+			data.email = value.toString();
+			break;
+		case 4:
+			fieldToBeUpdated = "phone";
+			data.phone = value.toString();
+			break;
+		case 5:
+			fieldToBeUpdated = "age";
+			data.age = value.toString();
+			break;
+		case 6:
+			fieldToBeUpdated = "gender";
+			data.gender = value.toString();
+			break;
+		case 7:
+			fieldToBeUpdated = "userrole";
+			data.userrole = value.toString();
+			break;
+		default:
+			qCritical() << "UserAbstractTableModel::setData:" << "Column index is not editable.";
+			return false;
+	}
+
+	QSqlQuery query;
+	QString statement = QString("UPDATE users SET %1 = :value where username = :username").arg(fieldToBeUpdated);
+	query.prepare(statement);
+	query.bindValue(":username", data.username);
+	query.bindValue(":value", value);
+
+	if (!query.exec()) {
+		qCritical() << "UserAbstractTableModel::setData:" << "Query did not execute successfully";
+		return false;
+	}
+
+	emit dataChanged(index, index, {Qt::DisplayRole, Qt::EditRole});
+	qInfo() << "Update signal sent to the table.";
+	return true;
+}
+
 QVariant UserAbstractTableModel::headerData(int section,
 											Qt::Orientation orientation,
 											int role) const {
