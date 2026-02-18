@@ -369,6 +369,7 @@ Item {
 
 					if (!success) {
 						root.editFailed()
+						view.currentIndex = 0
 						console.error("Editing was not made.")
 						return
 					}

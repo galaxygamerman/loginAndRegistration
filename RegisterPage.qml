@@ -338,6 +338,7 @@ Item {
 														 roleBox.currentText)
 					if(!success) {
 						registrationPage.registrationFailed()
+						view.currentIndex = 0
 						console.error("Registration was not made.")
 						return
 					}
