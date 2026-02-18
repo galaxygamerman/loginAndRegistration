@@ -1,5 +1,4 @@
 #include "userabstracttablemodel.h"
-#include <QtSql>
 #include "databasemanager.h"
 
 UserAbstractTableModel::UserAbstractTableModel(DatabaseManager *dbPtr, QObject *parent)
@@ -53,27 +52,21 @@ QVariant UserAbstractTableModel::headerData(int section,
 bool UserAbstractTableModel::removeRows(int row, int count, const QModelIndex &parent) {
 	if (row < 0 || row + count > this->userDataList.size()) return false;
 
-	QSqlDatabase db = QSqlDatabase::database();
-	if (!db.transaction()) return false;
-
-	beginRemoveRows(parent, row, row + count - 1);
-	for (uint i = 0; i < count; i++) {
-		QString username = this->userDataList.at(row).username;
-
-		QSqlQuery query;
-		query.prepare("DELETE FROM users WHERE username = :username");
-		query.bindValue(":username", username);
-
-		if (!query.exec()) {
-			endRemoveRows();
-			db.rollback();
-			return false;
-		}
-		this->userDataList.removeAt(row);
+	QStringList usernames;
+	for (int i = 0; i < count; i++) {
+		usernames.append(this->userDataList.at(row + i).username);
 	}
 
+	if (!this->dbManager->deleteUsers(usernames)) {
+		return false;
+	}
+
+	beginRemoveRows(parent, row, row + count - 1);
+	for (int i = 0; i < count; i++) {
+		this->userDataList.removeAt(row);
+	}
 	endRemoveRows();
-	db.commit();
+
 	return true;
 }
 

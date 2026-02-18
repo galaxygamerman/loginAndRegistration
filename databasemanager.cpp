@@ -159,3 +159,21 @@ QVariantList DatabaseManager::getAllUserData(){
 	}
 	return users;
 }
+
+bool DatabaseManager::deleteUsers(const QStringList &usernames) {
+	if (!this->myDB.transaction()) return false;
+
+	QSqlQuery query(this->myDB);
+	query.prepare("DELETE FROM users WHERE username = :username");
+
+	for (const QString &username : usernames) {
+		query.bindValue(":username", username);
+		if (!query.exec()) {
+			this->myDB.rollback();
+			return false;
+		}
+	}
+
+	this->myDB.commit();
+	return true;
+}
