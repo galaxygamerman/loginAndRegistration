@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 	DatabaseManager* dbManager = new DatabaseManager(&app);
 	UserAbstractListModel* userAbstractListModel = new UserAbstractListModel();
 	userAbstractListModel->fetchUsers();
-	UserAbstractTableModel* userAbstractTableModel = new UserAbstractTableModel();
+	UserAbstractTableModel* userAbstractTableModel = new UserAbstractTableModel(dbManager);
 	userAbstractTableModel->fetchUsers();
 
 	QQmlApplicationEngine engine;

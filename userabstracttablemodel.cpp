@@ -1,8 +1,10 @@
 #include "userabstracttablemodel.h"
 #include <QtSql>
+#include "databasemanager.h"
 
-UserAbstractTableModel::UserAbstractTableModel(QObject *parent)
-	: QAbstractTableModel{parent} {}
+UserAbstractTableModel::UserAbstractTableModel(DatabaseManager *dbPtr, QObject *parent)
+	: QAbstractTableModel{parent}
+	, dbManager(dbPtr) {}
 
 int UserAbstractTableModel::rowCount(const QModelIndex &parent) const {
 	return this->userDataList.size();

@@ -3,6 +3,7 @@
 
 #include <QAbstractTableModel>
 #include <QObject>
+#include "databasemanager.h"
 #include "userdata.h"
 
 class UserAbstractTableModel : public QAbstractTableModel
@@ -10,9 +11,10 @@ class UserAbstractTableModel : public QAbstractTableModel
 private:
 	Q_OBJECT
 	QList<UserData> userDataList;
+	DatabaseManager *dbManager;
 
 public:
-	explicit UserAbstractTableModel(QObject *parent = nullptr);
+	explicit UserAbstractTableModel(DatabaseManager *dbPtr = nullptr, QObject *parent = nullptr);
 
 	// QAbstractItemModel interface
 	enum UserRoles { DisplayRole = Qt::DisplayRole };
