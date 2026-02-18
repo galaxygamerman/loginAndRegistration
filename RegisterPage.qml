@@ -328,14 +328,18 @@ Item {
 								+ ` age: ${ageField.value}`
 								+ ` gender: ${genderGroup.checkedButton.text}`
 								+ ` role: ${roleBox.currentText}`)
-					let success = dbManager.registerUser(userField.text,
-														 pwdField.text,
-														 nameField.text,
-														 emailField.text,
-														 phoneField.text,
-														 ageField.value,
-														 genderGroup.checkedButton.text,
-														 roleBox.currentText)
+					let newData = {
+						"username": userField.text,
+						"password": pwdField.text,
+						"fullname": nameField.text,
+						"email": emailField.text,
+						"phone": phoneField.text,
+						"age": ageField.value,
+						"gender": genderGroup.checkedButton.text,
+						"userrole": roleBox.currentText
+					}
+					let success = userAbstractTableModel.addUser(newData)
+
 					if(!success) {
 						registrationPage.registrationFailed()
 						view.currentIndex = 0

@@ -143,6 +143,30 @@ void UserAbstractTableModel::fetchUsers() {
 	endResetModel();
 }
 
+bool UserAbstractTableModel::addUser(const QVariantMap &newData) {
+	UserData newUserData = {.username = newData["username"].toString(),
+							.password = newData["password"].toString(),
+							.fullname = newData["fullname"].toString(),
+							.email = newData["email"].toString(),
+							.phone = newData["phone"].toString(),
+							.age = newData["age"].toString(),
+							.gender = newData["gender"].toString(),
+							.userrole = newData["userrole"].toString()};
+
+	bool success = this->dbManager->registerUser(newUserData.username,
+												 newUserData.password,
+												 newUserData.fullname,
+												 newUserData.email,
+												 newUserData.phone,
+												 newUserData.age,
+												 newUserData.gender,
+												 newUserData.userrole);
+	if (!success) return false;
+
+	this->userDataList.append(newUserData);
+	return true;
+}
+
 bool UserAbstractTableModel::updateRow(const int row, const QVariantMap &newData) {
 	if (row < 0 || row >= this->userDataList.size()) return false;
 
