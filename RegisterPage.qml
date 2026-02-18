@@ -9,6 +9,7 @@ Item {
 
 	signal goBack
 	signal registrationCompleted
+	signal registrationFailed
 
 	BackgroundImage {
 		id: backgroundImage
@@ -336,6 +337,7 @@ Item {
 														 genderGroup.checkedButton.text,
 														 roleBox.currentText)
 					if(!success) {
+						registrationPage.registrationFailed()
 						console.error("Registration was not made.")
 						return
 					}

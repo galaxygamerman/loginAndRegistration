@@ -42,6 +42,11 @@ Window {
 				authStatusDialog.text = "Account creation was successful!\nYou can now log in."
 				authStatusDialog.open()
 			}
+			onRegistrationFailed: {
+				authStatusDialog.title = "Failure"
+				authStatusDialog.text = "There was a problem creating your account.\nPlease try again with different credentials."
+				authStatusDialog.open()
+			}
 		}
 	}
 	Component {
@@ -80,6 +85,11 @@ Window {
 		EditPage{
 			onGoBack: stack.pop()
 			onEditCompleted: stack.pop()
+			onEditFailed: {
+				authStatusDialog.title = "Failure"
+				authStatusDialog.text = "There was a problem editing this account.\nPlease try again with different credentials."
+				authStatusDialog.open()
+			}
 		}
 	}
 }

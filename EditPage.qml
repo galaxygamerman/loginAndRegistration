@@ -10,6 +10,7 @@ Item {
 	property int currentRow: -1
 	signal goBack
 	signal editCompleted
+	signal editFailed
 
 	Component.onCompleted: {
 		let username = userAbstractTableModel.data(userAbstractTableModel.index(currentRow,0)) || ""
@@ -367,6 +368,7 @@ Item {
 					let success = userAbstractTableModel.updateRows(root.currentRow, newData)
 
 					if (!success) {
+						root.editFailed()
 						console.error("Editing was not made.")
 						return
 					}
