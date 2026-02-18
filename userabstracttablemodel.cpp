@@ -73,16 +73,17 @@ bool UserAbstractTableModel::removeRows(int row, int count, const QModelIndex &p
 void UserAbstractTableModel::fetchUsers() {
 	beginResetModel();
 	this->userDataList.clear();
-	QSqlQuery query("SELECT * FROM users");
-	while (query.next()) {
-		this->userDataList.append({query.value("username").toString(),
-								   query.value("password").toString(),
-								   query.value("fullname").toString(),
-								   query.value("email").toString(),
-								   query.value("phone").toString(),
-								   query.value("age").toString(),
-								   query.value("gender").toString(),
-								   query.value("userrole").toString()});
+	const QVariantList newList = this->dbManager->getAllUserData();
+	for (const QVariant &row : newList) {
+		const QVariantMap user = row.toMap();
+		this->userDataList.append((UserData) {.username = user["username"].toString(),
+											  .password = user["password"].toString(),
+											  .fullname = user["fullname"].toString(),
+											  .email = user["email"].toString(),
+											  .phone = user["phone"].toString(),
+											  .age = user["age"].toString(),
+											  .gender = user["gender"].toString(),
+											  .userrole = user["userrole"].toString()});
 	}
 	endResetModel();
 }
