@@ -28,7 +28,7 @@ public:
 
 	// Q_INVOKABLE methods
 	Q_INVOKABLE void fetchUsers();
-	Q_INVOKABLE bool updateRows(const int row, const QVariantMap &newData);
+	Q_INVOKABLE bool updateRow(const int row, const QVariantMap &newData);
 };
 
 #endif // USERABSTRACTTABLEMODEL_H
