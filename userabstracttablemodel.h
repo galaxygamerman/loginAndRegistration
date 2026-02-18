@@ -14,7 +14,7 @@ private:
 	DatabaseManager *dbManager;
 
 public:
-	explicit UserAbstractTableModel(DatabaseManager *dbPtr = nullptr, QObject *parent = nullptr);
+	explicit UserAbstractTableModel(DatabaseManager *dbPtr = new DatabaseManager(), QObject *parent = nullptr);
 
 	// QAbstractItemModel interface
 	enum UserRoles { DisplayRole = Qt::DisplayRole };
