@@ -16,6 +16,18 @@ private:
 public:
 	explicit UserAbstractTableModel(DatabaseManager *dbPtr = new DatabaseManager(), QObject *parent = nullptr);
 
+	// Helper function
+	static UserData toUserData(const QVariantMap data) {
+		return {.username = data["username"].toString(),
+				.password = data["password"].toString(),
+				.fullname = data["fullname"].toString(),
+				.email    = data["email"].toString(),
+				.phone    = data["phone"].toString(),
+				.age      = data["age"].toString(),
+				.gender   = data["gender"].toString(),
+				.userrole = data["userrole"].toString()};
+	}
+
 	// QAbstractItemModel interface
 	enum UserRoles { DisplayRole = Qt::DisplayRole, EditRole = Qt::DisplayRole };
 

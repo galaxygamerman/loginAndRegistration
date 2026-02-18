@@ -144,14 +144,7 @@ void UserAbstractTableModel::fetchUsers() {
 }
 
 bool UserAbstractTableModel::addUser(const QVariantMap &newData) {
-	UserData newUserData = {.username = newData["username"].toString(),
-							.password = newData["password"].toString(),
-							.fullname = newData["fullname"].toString(),
-							.email = newData["email"].toString(),
-							.phone = newData["phone"].toString(),
-							.age = newData["age"].toString(),
-							.gender = newData["gender"].toString(),
-							.userrole = newData["userrole"].toString()};
+	UserData newUserData = UserAbstractTableModel::toUserData(newData);
 
 	bool success = this->dbManager->registerUser(newUserData.username,
 												 newUserData.password,
@@ -173,14 +166,7 @@ bool UserAbstractTableModel::updateRow(const int row, const QVariantMap &newData
 	QString oldUsername = this->userDataList[row].username;
 	qDebug() << "In the backend:" << row << oldUsername << newData;
 
-	UserData newUserData = {.username = newData["username"].toString(),
-							.password = newData["password"].toString(),
-							.fullname = newData["fullname"].toString(),
-							.email = newData["email"].toString(),
-							.phone = newData["phone"].toString(),
-							.age = newData["age"].toString(),
-							.gender = newData["gender"].toString(),
-							.userrole = newData["userrole"].toString()};
+	UserData newUserData = UserAbstractTableModel::toUserData(newData);
 
 	bool success = this->dbManager->updateUser(oldUsername,
 											   newUserData.username,
