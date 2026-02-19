@@ -156,7 +156,10 @@ bool UserAbstractTableModel::addUser(const QVariantMap &newData) {
 												 newUserData.userrole);
 	if (!success) return false;
 
+	int row = this->userDataList.size();
+	beginInsertRows(QModelIndex(), row, row);
 	this->userDataList.append(newUserData);
+	endInsertRows();
 	return true;
 }
 
