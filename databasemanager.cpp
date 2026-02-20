@@ -25,6 +25,7 @@ DatabaseManager::DatabaseManager(QObject *parent)
 
 	if (dbExists){
 		qDebug() << pathToDatabase << "file already detected. No need of running script.";
+		this->syncToCsv();
 		return;
 	}else{
 		qDebug() << pathToDatabase << "file not detected. Creating table now";
@@ -47,6 +48,7 @@ DatabaseManager::DatabaseManager(QObject *parent)
 	}
 
 	schemaFile.close();
+	this->syncToCsv();
 
 	// // for testing only. These should not exceute during prod
 	// query.exec(
@@ -122,6 +124,7 @@ bool DatabaseManager::registerUser(const QString &username,
 		return false;
 	}
 
+	if (!syncToCsv()) return false;
 	qDebug() << "User registration completed for" << username;
 	return true;
 }
@@ -225,6 +228,7 @@ bool DatabaseManager::updateUser(const QString &oldUsername,
 	if (!query.exec()) {
 		return false;
 	}
+	if (!syncToCsv()) return false;
 	return true;
 }
 
@@ -243,5 +247,6 @@ bool DatabaseManager::deleteUsers(const QStringList &usernames) {
 	}
 
 	this->myDB.commit();
+	if (!syncToCsv()) return false;
 	return true;
 }
