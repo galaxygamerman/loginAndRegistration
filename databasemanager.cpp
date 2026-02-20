@@ -78,7 +78,7 @@ bool DatabaseManager::syncToCsv() {
 
 	QVariantList usersList = this->getAllUserData();
 
-	for (const auto &row : usersList) {
+	for (const auto &row : std::as_const(usersList)) {
 		QVariantMap user = row.toMap();
 		print << QString("%1,%2,%3,%4,%5,%6,%7,%8\n")
 			  .arg(user["username"].toString(),
