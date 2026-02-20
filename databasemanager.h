@@ -11,6 +11,8 @@ private:
 	Q_OBJECT
 	QSqlDatabase myDB;
 
+	bool syncToCsv();
+
 public:
 	explicit DatabaseManager(QObject *parent = nullptr);
 

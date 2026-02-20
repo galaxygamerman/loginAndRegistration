@@ -63,6 +63,37 @@ DatabaseManager::DatabaseManager(QObject *parent)
 	// 	"VALUES ('_3','33333333','33333333','3333@org.org','3333333333',103,'Female','Guest')");
 }
 
+bool DatabaseManager::syncToCsv() {
+	QString pathToCsv = "database/user.csv";
+	QFile theFile(pathToCsv);
+	if (!theFile.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text)) {
+		qFatal() << pathToCsv << "not created because the script file could not be opened.";
+		return false;
+	}
+
+	QTextStream print(&theFile);
+	print << "username,password,fullname,email,phone,age,gender,userrole\n";
+
+	QVariantList usersList = this->getAllUserData();
+
+	for (const auto &row : usersList) {
+		QVariantMap user = row.toMap();
+		print << QString("%1,%2,%3,%4,%5,%6,%7,%8\n")
+			  .arg(user["username"].toString(),
+			  user["password"].toString(),
+			  user["fullname"].toString(),
+			  user["email"].toString(),
+			  user["phone"].toString(),
+			  user["age"].toString(),
+			  user["gender"].toString(),
+			  user["userrole"].toString());
+	}
+
+	qDebug() << "CSV file is synced up.";
+	theFile.close();
+	return true;
+}
+
 bool DatabaseManager::registerUser(const QString &username,
 								   const QString &password,
 								   const QString &fullname,
