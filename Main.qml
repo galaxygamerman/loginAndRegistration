@@ -78,6 +78,7 @@ Window {
 		UserAbstractTableViewPage{
 			onGoBack: stack.pop()
 			onEditPressed: row => {stack.push(editPage,{currentRow: row})}
+			onGoDownload: stack.push(downloadPage)
 		}
 	}
 	Component{
@@ -90,6 +91,12 @@ Window {
 				authStatusDialog.text = "There was a problem editing this account.\nPlease try again with different credentials."
 				authStatusDialog.open()
 			}
+		}
+	}
+	Component{
+		id: downloadPage
+		BackupDataPage{
+			onGoBack: stack.pop()
 		}
 	}
 }

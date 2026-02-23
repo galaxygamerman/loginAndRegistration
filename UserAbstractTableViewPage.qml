@@ -7,6 +7,7 @@ Item {
 	id: root
 	signal goBack
 	signal editPressed(int row)
+	signal goDownload
 
 	ReturnButton {
 		text: "< Back"
@@ -17,6 +18,20 @@ Item {
 	DeleteConfirmationDialog {
 		id: deleteConfirmationDialog
 		anchors.centerIn: parent
+	}
+
+	Button{
+		text: "Go Download"
+		font.pixelSize: 16
+		anchors.right: parent.right
+		anchors.bottom: parent.bottom
+		anchors.margins: 20
+		z: 10
+
+		Material.background: "snow"
+		Material.accent: "#008080"
+
+		onClicked: root.goDownload()
 	}
 
 	ColumnLayout {

@@ -25,6 +25,7 @@ qt_add_qml_module(apploginAndRegistration
         QML_FILES UserAbstractListViewPage.qml
         QML_FILES UserAbstractTableViewPage.qml
         QML_FILES EditPage.qml
+        QML_FILES BackupDataPage.qml
         SOURCES databasemanager.h databasemanager.cpp
         RESOURCES assets.qrc
         QML_FILES AuthStatusDialog.qml
