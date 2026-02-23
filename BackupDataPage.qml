@@ -2,15 +2,13 @@ import QtQuick
 import QtQuick.Controls.Material
 import QtQuick.Layouts
 
-ColumnLayout {
+Item {
 	id: root
 	implicitWidth: 640
 	implicitHeight: 480
 
 	signal goBack
 
-	spacing: 20
-	anchors.centerIn: parent
 
 	ReturnButton {
 		id: backBtn
@@ -18,58 +16,63 @@ ColumnLayout {
 		onClicked: root.goBack()
 	}
 
-	Label {
-		text: "USB Data Transfer"
-		font {
-			pixelSize: 20
-			bold: true
+	ColumnLayout {
+		spacing: 20
+		anchors.fill: parent
+
+		Label {
+			text: "USB Data Transfer"
+			font {
+				pixelSize: 20
+				bold: true
+			}
+			Layout.alignment: Qt.AlignHCenter
 		}
-		Layout.alignment: Qt.AlignHCenter
-	}
 
-	RowLayout {
-		spacing: 10
+		RowLayout {
+			spacing: 10
+			Layout.alignment: Qt.AlignHCenter
 
-		ComboBox {
-			id: usbSelector
-			model: []
-			Layout.preferredWidth: 250
+			ComboBox {
+				id: usbSelector
+				model: []
+				Layout.preferredWidth: 250
 
-			onPressedChanged: {
-				if (pressed) {
-					model = dbManager.getUsbDrives()
+				onPressedChanged: {
+					if (pressed) {
+						model = dbManager.getUsbDrives()
+					}
 				}
+			}
+
+			Button {
+				text: "Refresh"
+				onClicked: usbSelector.model = dbManager.getUsbDrives()
 			}
 		}
 
 		Button {
-			text: "Refresh"
-			onClicked: usbSelector.model = dbManager.getUsbDrives()
-		}
-	}
+			text: "Transfer CSV to USB"
+			enabled: usbSelector.currentText !== ""
+			Layout.alignment: Qt.AlignHCenter
+			highlighted: true
 
-	Button {
-		text: "Transfer CSV to USB"
-		enabled: usbSelector.currentText !== ""
-		Layout.alignment: Qt.AlignHCenter
-		highlighted: true
-
-		onClicked: {
-			let success = dbManager.copyCsvToDrive(usbSelector.currentText)
-			if (success) {
-				transferStatus.text = "Transfer Successful!"
-				transferStatus.color = "green"
-			} else {
-				transferStatus.text = "Transfer Failed."
-				transferStatus.color = "red"
+			onClicked: {
+				let success = dbManager.copyCsvToDrive(usbSelector.currentText)
+				if (success) {
+					transferStatus.text = "Transfer Successful!"
+					transferStatus.color = "green"
+				} else {
+					transferStatus.text = "Transfer Failed."
+					transferStatus.color = "red"
+				}
 			}
 		}
-	}
 
-	Text {
-		id: transferStatus
-		text: ""
-		Layout.alignment: Qt.AlignHCenter
+		Text {
+			id: transferStatus
+			text: ""
+			Layout.alignment: Qt.AlignHCenter
+		}
 	}
 }
-
