@@ -17,6 +17,8 @@ int main(int argc, char *argv[])
 	UserAbstractTableModel* userAbstractTableModel = new UserAbstractTableModel(dbManager);
 	userAbstractTableModel->fetchUsers();
 
+	fileManager->syncToCsv(); // Needed to do the very first sync
+
 	QQmlApplicationEngine engine;
 
 	engine.rootContext()->setContextProperty("dbManager", dbManager);
@@ -24,6 +26,10 @@ int main(int argc, char *argv[])
 	engine.rootContext()->setContextProperty("userAbstractListModel", userAbstractListModel);
 	engine.rootContext()->setContextProperty("userAbstractTableModel", userAbstractTableModel);
 
+	QObject::connect(dbManager,
+					 &DatabaseManager::databaseChanged,
+					 fileManager,
+					 &FileManager::syncToCsv);
 	QObject::connect(
 		&engine,
 		&QQmlApplicationEngine::objectCreationFailed,

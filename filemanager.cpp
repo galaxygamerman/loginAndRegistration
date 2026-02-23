@@ -1,7 +1,9 @@
 #include "filemanager.h"
 
-FileManager::FileManager(QObject *parent)
-	: QObject{parent} {}
+FileManager::FileManager(DatabaseManager *dbPtr,
+						 QObject *parent)
+	: QObject{parent}
+	, dbManager(dbPtr) {}
 
 QStringList FileManager::getUsbDrives() {
 	QStringList drives;
@@ -24,5 +26,36 @@ bool FileManager::copyCsvToDrive(QString drivePath) {
 	}
 
 	qDebug() << "CSV file transfered successful.";
+	return true;
+}
+
+bool FileManager::syncToCsv() {
+	QString pathToCsv = "database/user.csv";
+	QFile theFile(pathToCsv);
+	if (!theFile.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text)) {
+		qFatal() << pathToCsv << "not created because the script file could not be opened.";
+		return false;
+	}
+
+	QTextStream print(&theFile);
+	print << "username,password,fullname,email,phone,age,gender,userrole\n";
+
+	QVariantList usersList = dbManager->getAllUserData();
+
+	for (const auto &row : std::as_const(usersList)) {
+		QVariantMap user = row.toMap();
+		print << QString("%1,%2,%3,%4,%5,%6,%7,%8\n")
+					 .arg(user["username"].toString(),
+						  user["password"].toString(),
+						  user["fullname"].toString(),
+						  user["email"].toString(),
+						  user["phone"].toString(),
+						  user["age"].toString(),
+						  user["gender"].toString(),
+						  user["userrole"].toString());
+	}
+
+	qDebug() << "CSV file is synced up.";
+	theFile.close();
 	return true;
 }

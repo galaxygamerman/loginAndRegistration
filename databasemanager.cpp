@@ -25,7 +25,7 @@ DatabaseManager::DatabaseManager(QObject *parent)
 
 	if (dbExists){
 		qDebug() << pathToDatabase << "file already detected. No need of running script.";
-		this->syncToCsv();
+		emit databaseChanged();
 		return;
 	}else{
 		qDebug() << pathToDatabase << "file not detected. Creating table now";
@@ -48,7 +48,7 @@ DatabaseManager::DatabaseManager(QObject *parent)
 	}
 
 	schemaFile.close();
-	this->syncToCsv();
+	emit databaseChanged();
 
 	// // for testing only. These should not exceute during prod
 	// query.exec(
@@ -63,37 +63,6 @@ DatabaseManager::DatabaseManager(QObject *parent)
 	// query.exec(
 	// 	"INSERT INTO users (username, password, fullname, email, phone, age, gender, userrole)"
 	// 	"VALUES ('_3','33333333','33333333','3333@org.org','3333333333',103,'Female','Guest')");
-}
-
-bool DatabaseManager::syncToCsv() {
-	QString pathToCsv = "database/user.csv";
-	QFile theFile(pathToCsv);
-	if (!theFile.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text)) {
-		qFatal() << pathToCsv << "not created because the script file could not be opened.";
-		return false;
-	}
-
-	QTextStream print(&theFile);
-	print << "username,password,fullname,email,phone,age,gender,userrole\n";
-
-	QVariantList usersList = this->getAllUserData();
-
-	for (const auto &row : std::as_const(usersList)) {
-		QVariantMap user = row.toMap();
-		print << QString("%1,%2,%3,%4,%5,%6,%7,%8\n")
-			  .arg(user["username"].toString(),
-			  user["password"].toString(),
-			  user["fullname"].toString(),
-			  user["email"].toString(),
-			  user["phone"].toString(),
-			  user["age"].toString(),
-			  user["gender"].toString(),
-			  user["userrole"].toString());
-	}
-
-	qDebug() << "CSV file is synced up.";
-	theFile.close();
-	return true;
 }
 
 bool DatabaseManager::registerUser(const QString &username,
@@ -124,7 +93,7 @@ bool DatabaseManager::registerUser(const QString &username,
 		return false;
 	}
 
-	if (!syncToCsv()) return false;
+	emit databaseChanged();
 	qDebug() << "User registration completed for" << username;
 	return true;
 }
@@ -228,7 +197,7 @@ bool DatabaseManager::updateUser(const QString &oldUsername,
 	if (!query.exec()) {
 		return false;
 	}
-	if (!syncToCsv()) return false;
+	emit databaseChanged();
 	return true;
 }
 
@@ -247,6 +216,6 @@ bool DatabaseManager::deleteUsers(const QStringList &usernames) {
 	}
 
 	this->myDB.commit();
-	if (!syncToCsv()) return false;
+	emit databaseChanged();
 	return true;
 }

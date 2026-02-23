@@ -12,8 +12,6 @@ class DatabaseManager : public QObject
 private:
 	QSqlDatabase myDB;
 
-	bool syncToCsv();
-
 public:
 	explicit DatabaseManager(QObject *parent = nullptr);
 
@@ -39,6 +37,9 @@ public:
 								const QString &gender,
 								const QString &userrole);
 	Q_INVOKABLE bool deleteUsers(const QStringList &usernames);
+
+signals:
+	void databaseChanged();
 };
 
 #endif // DATABASEMANAGER_H
