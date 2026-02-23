@@ -7,8 +7,9 @@
 
 class UserAbstractListModel : public QAbstractListModel
 {
-private:
 	Q_OBJECT
+
+private:
 	QList<UserData> userDataList;
 
 public:

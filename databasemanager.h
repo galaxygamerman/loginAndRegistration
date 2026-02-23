@@ -7,8 +7,9 @@
 
 class DatabaseManager : public QObject
 {
-private:
 	Q_OBJECT
+
+private:
 	QSqlDatabase myDB;
 
 	bool syncToCsv();

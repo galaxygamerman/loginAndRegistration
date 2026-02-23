@@ -8,8 +8,9 @@
 
 class UserAbstractTableModel : public QAbstractTableModel
 {
-private:
 	Q_OBJECT
+
+private:
 	QList<UserData> userDataList;
 	DatabaseManager *dbManager;
 
