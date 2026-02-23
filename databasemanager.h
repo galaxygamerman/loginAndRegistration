@@ -42,7 +42,9 @@ public:
 	Q_INVOKABLE QStringList getUsbDrives() {
 		QStringList drives;
 		for (const QStorageInfo &drive : QStorageInfo::mountedVolumes()) {
-			drives << drive.rootPath();
+			if (drive.isValid() && drive.isReady() && !drive.isReadOnly()) {
+				drives << drive.rootPath();
+			}
 		}
 		return drives;
 	}
