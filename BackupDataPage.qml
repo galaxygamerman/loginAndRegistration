@@ -37,9 +37,11 @@ Item {
 				id: usbSelector
 				model: []
 				Layout.preferredWidth: 250
+				Material.accent: "#008080"
+				Material.background: "snow"
 
 				onPressedChanged: {
-					if (pressed) {
+					if (this.pressed) {
 						model = fileManager.getUsbDrives()
 					}
 				}
@@ -48,14 +50,19 @@ Item {
 			Button {
 				text: "Refresh"
 				onClicked: usbSelector.model = fileManager.getUsbDrives()
+				Material.accent: "#008080"
+				Material.background: "snow"
 			}
 		}
 
 		Button {
+			id: submitBtn
 			text: "Transfer CSV to USB"
-			enabled: usbSelector.currentText !== ""
+			enabled: !(usbSelector.currentText === "" || usbSelector.currentText === "C:/")
 			Layout.alignment: Qt.AlignHCenter
-			highlighted: true
+			focus: enabled
+			Material.accent: "#008080"
+			Material.background: "snow"
 
 			onClicked: {
 				let success = fileManager.copyCsvToDrive(usbSelector.currentText)
