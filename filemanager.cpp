@@ -1,7 +1,6 @@
 #include "filemanager.h"
 
-FileManager::FileManager(DatabaseManager *dbPtr,
-						 QObject *parent)
+FileManager::FileManager(DatabaseManager *dbPtr, QObject *parent)
 	: QObject{parent}
 	, dbManager(dbPtr) {}
 
@@ -16,7 +15,8 @@ QStringList FileManager::getUsbDrives() {
 }
 
 bool FileManager::copyCsvToDrive(QString drivePath) {
-	QString src = "database/user.csv", dest = QDir(drivePath).filePath("user.csv");
+	QString src = this->pathToCsvFile,
+			dest = QDir(drivePath).filePath(QFileInfo(this->pathToCsvFile).fileName());
 
 	if (QFile::exists(dest)) { QFile::remove(dest); }
 
@@ -30,10 +30,10 @@ bool FileManager::copyCsvToDrive(QString drivePath) {
 }
 
 bool FileManager::syncToCsv() {
-	QString pathToCsv = "database/user.csv";
-	QFile theFile(pathToCsv);
+	QFile theFile(this->pathToCsvFile);
 	if (!theFile.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text)) {
-		qFatal() << pathToCsv << "not created because the script file could not be opened.";
+		qFatal() << theFile.fileName()
+				 << "not created because the script file could not be opened.";
 		return false;
 	}
 
@@ -55,7 +55,7 @@ bool FileManager::syncToCsv() {
 						  user["userrole"].toString());
 	}
 
-	qDebug() << "CSV file is synced up.";
+	qDebug() << "CSV file" << theFile.fileName() << "is synced up.";
 	theFile.close();
 	return true;
 }

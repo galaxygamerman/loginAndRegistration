@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QFile>
+#include <QFileInfo>
 #include <QStorageInfo>
 #include "databasemanager.h"
 
@@ -12,6 +14,7 @@ class FileManager : public QObject
 
 private:
 	DatabaseManager *dbManager;
+	static inline const QString pathToCsvFile = "database/users.csv";
 
 public:
 	explicit FileManager(DatabaseManager *dbPtr = new DatabaseManager(),
