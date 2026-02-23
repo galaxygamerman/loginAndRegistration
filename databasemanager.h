@@ -38,32 +38,6 @@ public:
 								const QString &gender,
 								const QString &userrole);
 	Q_INVOKABLE bool deleteUsers(const QStringList &usernames);
-
-	Q_INVOKABLE QStringList getUsbDrives() {
-		QStringList drives;
-		for (const QStorageInfo &drive : QStorageInfo::mountedVolumes()) {
-			if (drive.isValid() && drive.isReady() && !drive.isReadOnly()) {
-				drives << drive.rootPath();
-			}
-		}
-		return drives;
-	}
-	Q_INVOKABLE bool copyCsvToDrive(QString drivePath){
-		QString src = "database/user.csv",
-			dest = QDir(drivePath).filePath("user.csv");
-
-		if (QFile::exists(dest)){
-			QFile::remove(dest);
-		}
-
-		if(!QFile::copy(src,dest)){
-			qFatal() << "CSV file transfer not successful.";
-			return false;
-		}
-
-		qDebug() << "CSV file transfered successful.";
-		return true;
-	}
 };
 
 #endif // DATABASEMANAGER_H

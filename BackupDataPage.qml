@@ -40,14 +40,14 @@ Item {
 
 				onPressedChanged: {
 					if (pressed) {
-						model = dbManager.getUsbDrives()
+						model = fileManager.getUsbDrives()
 					}
 				}
 			}
 
 			Button {
 				text: "Refresh"
-				onClicked: usbSelector.model = dbManager.getUsbDrives()
+				onClicked: usbSelector.model = fileManager.getUsbDrives()
 			}
 		}
 
@@ -58,7 +58,7 @@ Item {
 			highlighted: true
 
 			onClicked: {
-				let success = dbManager.copyCsvToDrive(usbSelector.currentText)
+				let success = fileManager.copyCsvToDrive(usbSelector.currentText)
 				if (success) {
 					transferStatus.text = "Transfer Successful!"
 					transferStatus.color = "green"
