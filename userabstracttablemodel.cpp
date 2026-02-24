@@ -131,14 +131,8 @@ void UserAbstractTableModel::fetchUsers() {
 	const QVariantList newList = this->dbManager->getAllUserData();
 	for (const QVariant &row : newList) {
 		const QVariantMap user = row.toMap();
-		this->userDataList.append((UserData) {.username = user["username"].toString(),
-											  .password = user["password"].toString(),
-											  .fullname = user["fullname"].toString(),
-											  .email = user["email"].toString(),
-											  .phone = user["phone"].toString(),
-											  .age = user["age"].toString(),
-											  .gender = user["gender"].toString(),
-											  .userrole = user["userrole"].toString()});
+		UserData userdata = UserAbstractTableModel::toUserData(user);
+		this->userDataList.append(userdata);
 	}
 	endResetModel();
 }
