@@ -184,15 +184,15 @@ bool UserAbstractTableModel::updateRow(const int row, const QVariantMap &newData
 }
 
 bool UserAbstractTableModel::setDataOrUpdateRow(const QModelIndex &index, const QVariantMap &newData, int role) {
-	UserData userData = this->userDataList[index.row()];
-	std::vector<bool> wasEdited = {newData["username"] != userData.username,
-									newData["password"] != userData.password,
-									newData["fullname"] != userData.fullname,
-									newData["email"] != userData.email,
-									newData["phone"] != userData.phone,
-									newData["age"] != userData.age,
-									newData["gender"] != userData.gender,
-									newData["userrole"] != userData.userrole};
+	UserData oldUserData = this->userDataList[index.row()];
+	std::vector<bool> wasEdited = {newData["username"] != oldUserData.username,
+								   newData["password"] != oldUserData.password,
+								   newData["fullname"] != oldUserData.fullname,
+								   newData["email"] != oldUserData.email,
+								   newData["phone"] != oldUserData.phone,
+								   newData["age"] != oldUserData.age,
+								   newData["gender"] != oldUserData.gender,
+								   newData["userrole"] != oldUserData.userrole};
 
 	int total = wasEdited.size(),
 		count = std::count(wasEdited.begin(), wasEdited.end(), true);
